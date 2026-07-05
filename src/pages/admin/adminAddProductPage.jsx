@@ -1,4 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import uploadMedia from '/src/utils/mediaUpload.js';
+ 
 
 export default function AdminAddProductPage() {
     
@@ -14,6 +18,7 @@ export default function AdminAddProductPage() {
     const [category, setCategory] = useState("");
     const [isAvailable, setIsAvailable] = useState(true);
     const [stock, setStock] = useState(0);
+    const navigate = useNavigate();
 
 
     // productId
@@ -29,13 +34,67 @@ export default function AdminAddProductPage() {
     // isAvailable
     // stock
 
+    async function handleSave(){
+        try{
+
+            const token = localStorage.getItem("token");
+
+            if(token == null){
+                toast.error("You must be logged in to perform this action.");
+                window.location.href = "/login";
+                return;
+            }
+
+            const mediaUploadPromises = []
+
+            for(let i=0; i<images.length; i++){
+
+                mediaUploadPromises.push(uploadMedia(images[i]));
+
+            }
+
+            const urls = await Promise.all(mediaUploadPromises);
+            const altNamesArray = altNames.split(", ") 
+
+            const productData = {
+                productId :productId,
+                name : name,
+                altNames : altNamesArray,
+                price :price,
+                labelledPrice : labelledPrice,
+                description : description,
+                images : urls,
+                brand : brand,
+                model : model,
+                category : category,
+                isAvailable : isAvailable,
+                stock : stock
+            }
+
+            await axios.post(import.meta.env.VITE_API_URL+"/products", productData,
+                {
+                    headers :{
+                        "Authorization" : "Bearer "+token
+                    }
+                }
+            )
+
+            toast.success("Product added successfully.");
+            navigate("/admin/products");
+
+        }catch(error){
+            toast.error(error?.response?.data?.message || "Failed to add product. Please try again.")
+            console.log("error adding product", error)
+        }
+    }
+
     return (
         <div className = "w-full h-full flex flex-col items-center p-4 overflow-y-auto">
             <div className = "sticky top-0 w-full h-[100px] rounded-lg bg-accent text-white flex items-center p-5 justify-between shadow-2xl"> 
                 
                 <h1 className = "text-2xl font-semibold">Add Product</h1>
                 <div className = "h-full flex justify-center items-center">
-                    <button className = "bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">Save</button>
+                    <button onClick={handleSave} className = "bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">Save</button>
                     <button className = "bg-red-500 text-white px-4 py-2 rounded-lg ml-2 hover:bg-red-600">Cancel</button>
                 </div>
 
