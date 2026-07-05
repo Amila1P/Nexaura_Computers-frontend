@@ -5,4 +5,34 @@
     --color-secondary : #F3F4F6;
     --color-accent : #00D2C4;
 }
+/* ================================
+   Chrome / Edge / Safari Scrollbar
+   ================================ */
 
+/* Set scrollbar width */
+::-webkit-scrollbar {
+  width: 8px;
+  
+}
+
+/* Scrollbar background (track) */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Scrollbar draggable part (thumb) */
+::-webkit-scrollbar-thumb {
+  background-color: #888;  /* grey thumb color */
+  border-radius: 4px;       /* rounded corners */
+}
+
+
+/* ================================
+   Firefox Scrollbar Styling
+   ================================ */
+
+/* Applies to all elements in Firefox */
+* {
+  scrollbar-width: thin;                 /* makes scrollbar thinner */
+  scrollbar-color: #888 transparent;     /* thumb color + track color */
+}
