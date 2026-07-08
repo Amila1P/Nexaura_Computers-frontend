@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import uploadMedia from '/src/utils/mediaUpload.js';
+import axios from "axios";
  
 
 export default function AdminAddProductPage() {
@@ -54,22 +55,25 @@ export default function AdminAddProductPage() {
             }
 
             const urls = await Promise.all(mediaUploadPromises);
-            const altNamesArray = altNames.split(", ") 
+            const altNamesArray = altNames
+                .split(",")
+                .map(name => name.trim())
+                .filter(Boolean);
 
             const productData = {
-                productId :productId,
-                name : name,
-                altNames : altNamesArray,
-                price :price,
-                labelledPrice : labelledPrice,
-                description : description,
-                images : urls,
-                brand : brand,
-                model : model,
-                category : category,
-                isAvailable : isAvailable,
-                stock : stock
-            }
+                productId: Number(productId) || productId,
+                name: name,
+                altNames: altNamesArray,
+                price: Number(price),
+                labelledPrice: Number(labelledPrice),
+                description: description,
+                images: urls,
+                brand: brand,
+                model: model,
+                category: category,
+                isAvailable: isAvailable,  
+                stock: Number(stock) || 0
+            };
 
             await axios.post(import.meta.env.VITE_API_URL+"/products", productData,
                 {
@@ -191,14 +195,14 @@ export default function AdminAddProductPage() {
                         <input className = "border border-gray-300 rounded-md p-2 w-full"
                             type="number"
                             value={stock}
-                            onChange={(e) => setStock(parseInt(e.target.value))}
+                            onChange={(e) => setStock(Number(e.target.value))}
                         />
                     </div>
                     <div className = "w-1/4 p-2">
                         <label className ="block font-semibold mb-2">Availability</label>
                         <select
-                            value={isAvailable} 
-                            onChange={(e) => setAvailability(e.target.value)} 
+                            value={isAvailable ? "true" : "false"} 
+                            onChange={(e) => setIsAvailable(e.target.value === "true")} 
                             className = "border border-gray-300 rounded-md p-2 w-full">
                             <option className = "bg-green-600 text-white font-semibold" value={true}>Available</option>
                             <option className = "bg-red-600 text-white font-semibold" value={false}>Not Available</option>
