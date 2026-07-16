@@ -5,6 +5,8 @@ import axios from "axios";
 import { TbTrash } from "react-icons/tb";
 import { BiEdit } from "react-icons/bi";
 import toast from "react-hot-toast";
+import LoadingAnimation from "../../components/LoadingAnimation.jsx";
+import ProductDeleteModal from "../../components/ProductDeleteModal.jsx";
 
 export default function AdminProductPage() {
 
@@ -43,7 +45,9 @@ export default function AdminProductPage() {
             </div>
 
 
-            <table className="mt-5 w-full text-secondary">
+            {
+                isProductAreLoaded ?
+                <table className="mt-5 w-full text-secondary">
                 <thead className="bg-accent/45 text-white">
                     <tr>
                         <th className = "text-center border border-primary p-4">Image</th>
@@ -79,7 +83,16 @@ export default function AdminProductPage() {
                                         <td className = "text-center text-wrap border border-primary p-2">{item.availability ? 'In Stock' : 'Out of Stock'}</td>
                                         <td className = "text-center text-wrap border border-primary p-2">{item.stock}</td>
                                         <td className = "text-center text-wrap border border-primary p-2">
-                                            <TbTrash className = "text-2xl text-red-500 cursor-pointer hover:text-red-700"
+                                            
+                                            <ProductDeleteModal
+                                                product={item}
+                                                refresh={
+                                                    ()=>{
+                                                        setIsProductAreLoaded(false)
+                                                    }
+                                                }
+                                            />
+                                            {/* <TbTrash className = "text-2xl text-red-500 cursor-pointer hover:text-red-700"
                                                 onClick={
                                                     ()=>{
                                                         toast.success(item.productId)
@@ -102,7 +115,7 @@ export default function AdminProductPage() {
                                                     }
                                                 }
                                             />
-                                            <BiEdit className = "text-2xl text-blue-500 cursor-pointer hover:text-blue-700 "/>
+                                            <BiEdit className = "text-2xl text-blue-500 cursor-pointer hover:text-blue-700 "/>*/}
                                         </td>
                                     </tr>
                                 )
@@ -110,7 +123,11 @@ export default function AdminProductPage() {
                         )
                     }
                 </tbody>
-            </table>
+                </table>
+
+                :
+                <LoadingAnimation/>
+            }
 
 
             <Link to="/admin/add-products" className ="fixed bottom-8 right-16 w-[60px] h-[60px] bg-accent flex justify-center items-center text-white text-3xl rounded-full hover:bg-black hover:text-accent" >
