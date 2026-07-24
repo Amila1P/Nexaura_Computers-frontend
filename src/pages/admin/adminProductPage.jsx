@@ -114,8 +114,10 @@ export default function AdminProductPage() {
                                                         )
                                                     }
                                                 }
-                                            />
-                                            <BiEdit className = "text-2xl text-blue-500 cursor-pointer hover:text-blue-700 "/>*/}
+                                            />*/}
+                                            <Link to="/admin/edit-products" state={ item } >
+                                                <BiEdit className="text-2xl text-blue-500 cursor-pointer hover:text-blue-700" />
+                                            </Link>
                                         </td>
                                     </tr>
                                 )
