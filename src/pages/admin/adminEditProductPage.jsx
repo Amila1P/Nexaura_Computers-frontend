@@ -20,6 +20,7 @@ export default function AdminEditProductPage() {
     const [category, setCategory] = useState("");
     const [isAvailable, setIsAvailable] = useState(true);
     const [stock, setStock] = useState(0);
+    const [isUpdating, setIsUpdating] = useState(false);
     const navigate = useNavigate();
 
 
@@ -45,9 +46,10 @@ export default function AdminEditProductPage() {
     // isAvailable
     // stock
 
-    async function handleSave(){
+    async function handleUpdate(){
         try{
 
+            setIsUpdating(true);
             const token = localStorage.getItem("token");
 
             if(token == null){
@@ -71,7 +73,6 @@ export default function AdminEditProductPage() {
                 .filter(Boolean);
 
             const productData = {
-                productId: Number(productId) || productId,
                 name: name,
                 altNames: altNamesArray,
                 price: Number(price),
@@ -85,7 +86,11 @@ export default function AdminEditProductPage() {
                 stock: Number(stock) || 0
             };
 
-            await axios.post(import.meta.env.VITE_API_URL+"/products", productData,
+            if(urls.length == 0){
+                productData.images = location.state.images;
+            }
+
+            await axios.put(import.meta.env.VITE_API_URL+"/products/" + productId, productData,
                 {
                     headers :{
                         "Authorization" : "Bearer "+token
@@ -93,12 +98,13 @@ export default function AdminEditProductPage() {
                 }
             )
 
-            toast.success("Product added successfully.");
+            toast.success("Product updated successfully.");
             navigate("/admin/products");
 
         }catch(error){
-            toast.error(error?.response?.data?.message || "Failed to add product. Please try again.")
-            console.log("error adding product", error)
+            setIsUpdating(false);
+            toast.error(error?.response?.data?.message || "Failed to update product. Please try again.")
+            console.log("error updating product", error)
         }
     }
 
@@ -108,7 +114,9 @@ export default function AdminEditProductPage() {
                 
                 <h1 className = "text-2xl font-semibold">Edit Product</h1>
                 <div className = "h-full flex justify-center items-center">
-                    <button onClick={handleSave} className = "bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">Update</button>
+                    <button onClick={handleUpdate} className = "bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600" disabled={isUpdating}>
+                        {isUpdating ? "Updating..." : "Update"}
+                    </button>
                     <button className = "bg-red-500 text-white px-4 py-2 rounded-lg ml-2 hover:bg-red-600">Cancel</button>
                 </div>
 
@@ -121,6 +129,7 @@ export default function AdminEditProductPage() {
                         <label className = "block font-semibold mb-2">Product ID:</label>
                         <input className = "border border-gray-300 rounded-md p-2 w-full"
                             value={productId}
+                            disabled
                             onChange={(e) => setProductId(e.target.value)}
                         />
                     </div>

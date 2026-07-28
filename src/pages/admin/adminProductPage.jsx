@@ -92,29 +92,7 @@ export default function AdminProductPage() {
                                                     }
                                                 }
                                             />
-                                            {/* <TbTrash className = "text-2xl text-red-500 cursor-pointer hover:text-red-700"
-                                                onClick={
-                                                    ()=>{
-                                                        toast.success(item.productId)
-                                                        const token = localStorage.getItem("token")
-                                                        axios.delete(import.meta.env.VITE_API_URL+"/products/"+item.productId,{
-                                                            headers:{
-                                                                'Authorization': "Bearer "+ token
-                                                            }
-                                                        }).then(
-                                                            ()=>{
-                                                                toast.success("Product delete successfully")
-                                                                setIsProductAreLoaded(false)
-                                                            }
-                                                        ).catch(
-                                                            (error)=>{
-                                                                toast.error("Failed delete product")
-                                                                console.log(error)
-                                                            }
-                                                        )
-                                                    }
-                                                }
-                                            />*/}
+                                            
                                             <Link to="/admin/edit-products" state={ item } >
                                                 <BiEdit className="text-2xl text-blue-500 cursor-pointer hover:text-blue-700" />
                                             </Link>
