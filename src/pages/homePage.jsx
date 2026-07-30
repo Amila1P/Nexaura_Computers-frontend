@@ -1,10 +1,18 @@
+import { Routes, Route } from "react-router-dom"
 import Header from "../components/header.jsx"
+import ProductPage from "./productPage.jsx"
 
 export default function HomePage() {
     return (
         <div className="w-full h-screen bg-primary">
             <Header/>
-            <h1 className="text-[50px] text-center">Welcome to I-Computer</h1>
+            <div className="w-full border">
+                <Routes>
+                    <Route path="/" element={<h1>Welcome to the Home Page</h1>}/>
+                    <Route path="/products" element={<ProductPage/>}/>
+                    <Route path="/contact-us" element={<h1>Welcome to the Contact Us Page</h1>}/>
+                </Routes>
+            </div>
         </div>
     )
 }
