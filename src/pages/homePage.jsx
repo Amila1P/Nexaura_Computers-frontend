@@ -6,7 +6,7 @@ export default function HomePage() {
     return (
         <div className="w-full h-screen bg-primary">
             <Header/>
-            <div className="w-full border">
+            <div className="w-full min-h-[calc(100%-100px)] overflow-y-scroll border">
                 <Routes>
                     <Route path="/" element={<h1>Welcome to the Home Page</h1>}/>
                     <Route path="/products" element={<ProductPage/>}/>
