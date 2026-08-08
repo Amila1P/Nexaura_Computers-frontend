@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom"
 import Header from "../components/header.jsx"
 import ProductPage from "./productPage.jsx"
+import ProductOverviewPage from "./productOverview.jsx"
 
 export default function HomePage() {
     return (
@@ -11,6 +12,7 @@ export default function HomePage() {
                     <Route path="/" element={<h1>Welcome to the Home Page</h1>}/>
                     <Route path="/products" element={<ProductPage/>}/>
                     <Route path="/contact-us" element={<h1>Welcome to the Contact Us Page</h1>}/>
+                    <Route path="/overview/:productId" element={<ProductOverviewPage/>}/>
                 </Routes>
             </div>
         </div>
