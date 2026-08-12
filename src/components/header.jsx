@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { BiCart } from "react-icons/bi";
 
 export default function Header() {
     return (
@@ -11,6 +12,9 @@ export default function Header() {
                     <Link to="/products" className= "text-white hover:text-gray-300">Products</Link>
                     <Link to="/contact-us" className= "text-white hover:text-gray-300">Contact Us</Link>
                 </div>
+                <Link to="/cart" className= "text-white hover:text-gray-300">
+                    <BiCart className="text-white text-3xl hover:text-gray-300" />
+                </Link>
         </header>
     )
 }

@@ -2,10 +2,11 @@ import { Routes, Route } from "react-router-dom"
 import Header from "../components/header.jsx"
 import ProductPage from "./productPage.jsx"
 import ProductOverviewPage from "./productOverview.jsx"
+import CartPage from "./cart.jsx"
 
 export default function HomePage() {
     return (
-        <div className="w-full h-screen bg-primary">
+        <div className="w-full h-screen bg-white">
             <Header/>
             <div className="w-full min-h-[calc(100%-100px)] overflow-y-scroll border">
                 <Routes>
@@ -13,6 +14,7 @@ export default function HomePage() {
                     <Route path="/products" element={<ProductPage/>}/>
                     <Route path="/contact-us" element={<h1>Welcome to the Contact Us Page</h1>}/>
                     <Route path="/overview/:productId" element={<ProductOverviewPage/>}/>
+                    <Route path="/cart" element={<CartPage/>}/>
                 </Routes>
             </div>
         </div>
@@ -21,4 +23,4 @@ export default function HomePage() {
 
 // Deep Navy Blue (#0B192C) - Primary color
 // Crisp White / Light Gray (#F3F4F6) -Secondary color
-// Electric Cyan (#00D2C4) හෝ Vivid Blue (#2563EB) - Accent color
+// Electric Cyan (#00D2C4) or Vivid Blue (#2563EB) - Accent color

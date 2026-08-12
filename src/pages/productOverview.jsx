@@ -6,6 +6,7 @@ import {toast} from "react-hot-toast";
 import LoadingAnimation from "../components/loadingAnimation.jsx";
 import ImageSlideShow from "../components/imageSlideShow.jsx";
 import getFormattedPrice from "../utils/priceFormat.js";
+import { addToCart, getCart } from "../utils/cart.js";
 
 export default function ProductOverviewPage(){
 
@@ -89,10 +90,20 @@ export default function ProductOverviewPage(){
                             }
                         </p>
                         <div className = "flex gap-4 mt-5">
-                            <button className = "bg-blue-500 hover:bg-blue-700 transition-color duration-200 text-white font-bold py-2 px-4 rounded mt-5">
+                            <button className = "bg-blue-500 hover:bg-blue-700 transition-color duration-200 text-white font-bold py-2 px-4 rounded mt-5" onClick = {
+                                ()=>{
+                                    addToCart(product, 1);
+                                    console.log(getCart());
+                                }
+                            }>
                                 Add to Cart
                             </button>
-                            <button className = "bg-green-500 hover:bg-green-700 transition-color duration-200 text-white font-bold py-2 px-4 rounded mt-5">
+                            <button className = "bg-green-500 hover:bg-green-700 transition-color duration-200 text-white font-bold py-2 px-4 rounded mt-5" onClick={
+                                ()=>{
+                                    localStorage.removeItem("cart");
+                                    console.log(getCart());
+                                }
+                            }>
                                 Buy Now
                             </button>
                         </div>
