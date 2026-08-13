@@ -1,14 +1,12 @@
 import { Routes, Route } from "react-router-dom"
-import Header from "../components/header.jsx"
 import ProductPage from "./productPage.jsx"
 import ProductOverviewPage from "./productOverview.jsx"
 import CartPage from "./cart.jsx"
 
 export default function HomePage() {
     return (
-        <div className="w-full h-screen bg-white">
-            <Header/>
-            <div className="w-full min-h-[calc(100%-100px)] overflow-y-scroll border">
+        <div className="w-full min-h-[calc(100vh-100px)] bg-white">
+            <div className="w-full min-h-[calc(100vh-100px)] overflow-y-auto">
                 <Routes>
                     <Route path="/" element={<h1>Welcome to the Home Page</h1>}/>
                     <Route path="/products" element={<ProductPage/>}/>

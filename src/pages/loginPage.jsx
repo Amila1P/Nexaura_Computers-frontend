@@ -41,7 +41,7 @@ export default function LoginPage() {
 
 
     return (
-        <div className = " w-full h-screen flex items-center justify-center bg-[url('/login-bg.jpg')] bg-cover" >
+        <div className = " w-full min-h-[calc(100vh-100px)] flex items-center justify-center bg-[url('/login-bg.jpg')] bg-cover" >
             
             <div className = "w-1/2 h-full">
             </div>

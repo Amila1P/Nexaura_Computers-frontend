@@ -5,7 +5,7 @@ import AdminEditProductPage from "./admin/adminEditProductPage.jsx"
 
 export default function AdminPage() {
     return (
-        <div className = "w-full h-screen flex items-center bg-accent">
+        <div className = "w-full min-h-[calc(100vh-100px)] flex items-center bg-accent">
 
             <div className = "w-[300px] h-full bg-accent text-white">
 

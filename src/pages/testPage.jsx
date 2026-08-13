@@ -17,7 +17,7 @@ export default function TestPage() {
 
     return (
 
-        <div className = " w-full h-screen flex-col items-center justify-center bg-primary text-secondary">
+        <div className = " w-full min-h-[calc(100vh-100px)] flex-col items-center justify-center bg-primary text-secondary">
             
             <input onChange={
                     (e) =>{ 
