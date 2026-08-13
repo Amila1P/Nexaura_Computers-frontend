@@ -15,7 +15,6 @@ export default function AdminProductPage() {
  
     useEffect(()=>{
         if(! isProductAreLoaded){
-            //backend api
             const token = localStorage.getItem("token")
 
             axios.get(import.meta.env.VITE_API_URL + "/products", {
@@ -24,7 +23,7 @@ export default function AdminProductPage() {
                 }
             }).then(
                 (response)=>{
-                setProducts(response.data);
+                setProducts(Array.isArray(response.data) ? response.data : []);
                 setIsProductAreLoaded(true)
                 }
             ).catch(
@@ -66,7 +65,7 @@ export default function AdminProductPage() {
 
                 <tbody>
                     {
-                        products.map(
+                        Array.isArray(products) && products.map(
                             (item)=>{
                                 return(
                                     <tr className="odd:bg-gray-200 even:bg-primary odd:text-black border-t-4 border-primary hover:bg-accent/45" key={item.productId}>

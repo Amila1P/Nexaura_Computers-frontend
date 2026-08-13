@@ -7,30 +7,31 @@ import axios from "axios";
 
 export default function AdminEditProductPage() {
     const location = useLocation();
+    const selectedProduct = location.state ?? null;
     
-    const [productId, setProductId] = useState(location.state?.productId);
-    const [name, setName] = useState(location.state?.name);
-    const [altNames, setAltNames] = useState(location.state?.altNames?.join(", ") || "");
-    const [price, setPrice] = useState(location.state?.price);
-    const [labelledPrice, setLabelledPrice] = useState(location.state?.labelledPrice);
-    const [description, setDescription] = useState(location.state?.description);
-    const [images, setImages] = useState(location.state.images || []);
-    const [brand, setBrand] = useState("");
-    const [model, setModel] = useState(location.state.model);
-    const [category, setCategory] = useState("");
-    const [isAvailable, setIsAvailable] = useState(true);
-    const [stock, setStock] = useState(0);
+    const [productId, setProductId] = useState(() => selectedProduct?.productId ?? "");
+    const [name, setName] = useState(() => selectedProduct?.name ?? "");
+    const [altNames, setAltNames] = useState(() => selectedProduct?.altNames?.join(", ") ?? "");
+    const [price, setPrice] = useState(() => selectedProduct?.price ?? "");
+    const [labelledPrice, setLabelledPrice] = useState(() => selectedProduct?.labelledPrice ?? "");
+    const [description, setDescription] = useState(() => selectedProduct?.description ?? "");
+    const [images, setImages] = useState(() => selectedProduct?.images ?? []);
+    const [brand, setBrand] = useState(() => selectedProduct?.brand ?? "");
+    const [model, setModel] = useState(() => selectedProduct?.model ?? "");
+    const [category, setCategory] = useState(() => selectedProduct?.category ?? "");
+    const [isAvailable, setIsAvailable] = useState(() => selectedProduct?.isAvailable ?? true);
+    const [stock, setStock] = useState(() => selectedProduct?.stock ?? 0);
     const [isUpdating, setIsUpdating] = useState(false);
     const navigate = useNavigate();
 
 
     useEffect(
         () => {
-            if(location.state==null){
+            if(selectedProduct == null){
                 toast.error("No product data found. Please select a product to edit.");
                 navigate("/admin/products");
             }
-        }, []
+        }, [navigate, selectedProduct]
     )
 
     // productId
@@ -87,7 +88,7 @@ export default function AdminEditProductPage() {
             };
 
             if(urls.length == 0){
-                productData.images = location.state.images;
+                productData.images = selectedProduct?.images ?? [];
             }
 
             await axios.put(import.meta.env.VITE_API_URL+"/products/" + productId, productData,
@@ -110,7 +111,7 @@ export default function AdminEditProductPage() {
 
     return (
         <div className = "w-full h-full flex flex-col items-center p-4 overflow-y-auto">
-            <div className = "sticky top-0 w-full h-[100px] rounded-lg bg-accent text-white flex items-center p-5 justify-between shadow-2xl"> 
+            <div className = "sticky top-0 w-full h-25 rounded-lg bg-accent text-white flex items-center p-5 justify-between shadow-2xl"> 
                 
                 <h1 className = "text-2xl font-semibold">Edit Product</h1>
                 <div className = "h-full flex justify-center items-center">
