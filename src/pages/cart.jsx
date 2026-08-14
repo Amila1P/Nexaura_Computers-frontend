@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { getCart } from "../utils/cart.js";
+import { getCart, getCartTotal } from "../utils/cart.js";
 import getFormattedPrice from "../utils/priceFormat.js";
-import {getCartTotal} from "../utils/cart.js";
+import { Link } from "react-router-dom";
 
 export default function CartPage() {
     const [cart, setCart] = useState(getCart());
@@ -166,9 +166,9 @@ export default function CartPage() {
                 <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-gray-200 bg-white/95 backdrop-blur-sm shadow-[0_-8px_30px_rgba(0,0,0,0.08)]">
                     <div className="w-full max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
                         <p className="text-lg font-semibold text-gray-800">Total: {getFormattedPrice(getCartTotal(cart))}</p>
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        <Link to="/checkout" state={cart} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             Checkout
-                        </button>
+                        </Link>
                     </div>
                 </div>
 

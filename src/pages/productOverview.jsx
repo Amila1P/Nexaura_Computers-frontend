@@ -98,14 +98,27 @@ export default function ProductOverviewPage(){
                             }>
                                 Add to Cart
                             </button>
-                            <button className = "bg-green-500 hover:bg-green-700 transition-color duration-200 text-white font-bold py-2 px-4 rounded mt-5" onClick={
+                            <Link className = "bg-green-500 hover:bg-green-700 transition-color duration-200 text-white font-bold py-2 px-4 rounded mt-5" onClick={
                                 ()=>{
                                     localStorage.removeItem("cart");
                                     console.log(getCart());
                                 }
+                            } to="/checkout" state={
+                                [
+                                    {
+                                        product: {
+                                            productId: product.productId,
+                                            name: product.name,
+                                            image: product.images[0],
+                                            labelledPrice: product.labelledPrice,
+                                            price: product.price,
+                                        },
+                                        quantity: 1
+                                    },
+                                ]
                             }>
                                 Buy Now
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
