@@ -5,9 +5,9 @@ import AdminEditProductPage from "./admin/adminEditProductPage.jsx"
 
 export default function AdminPage() {
     return (
-        <div className = "w-full min-h-[calc(100vh-100px)] flex items-center bg-accent">
+        <div className = "w-full min-h-[calc(100vh-100px)] flex justify-center bg-accent">
 
-            <div className = "w-[300px] h-full bg-accent text-white">
+            <div className = "w-[300px] h-full fixed left-0 z-[9999] bg-accent text-white">
 
                 {/*
                 <a href = "/admin/products" className = "block py-2 px-4 hover:bg-gray-700">Products</a>
@@ -22,7 +22,7 @@ export default function AdminPage() {
 
             </div>
 
-            <div className = "w-[1200px] h-full bg-blue-900 border-[10px] border-accent rounded-2xl">
+            <div className = "w-full ml-[300px] h-full bg-blue-900 border-[10px] border-accent rounded-2xl ">
 
                 <Routes>
                     <Route path = "/" element = { <h1>Admin Dashboard</h1>}></Route>
