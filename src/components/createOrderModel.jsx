@@ -46,7 +46,6 @@ export default function CreateOrderModel(props) {
                 items : [] 
             }
 
-            console.log("Cart Data:", cart);
 
             for(let i=0; i<cart.length; i++){
                 const item = cart[i]
