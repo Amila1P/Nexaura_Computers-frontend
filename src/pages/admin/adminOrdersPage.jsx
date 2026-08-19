@@ -1,30 +1,38 @@
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
+import { FaEyeSlash } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { TbTrash } from "react-icons/tb";
 import { BiEdit } from "react-icons/bi";
 import toast from "react-hot-toast";
 import LoadingAnimation from "../../components/LoadingAnimation.jsx";
 import ProductDeleteModal from "../../components/ProductDeleteModal.jsx";
 import getFormattedPrice from "../../utils/priceFormat.js";
+import OrderDetailsModal from "../../components/orderDetailsModal.jsx";
 
 export default function AdminOrdersPage() {
 
     const [orders ,setOrders] = useState([]);
+    const [pageSize, setPageSize] = useState(10);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalOrders, setTotalOrders] = useState(0);
     const [isOrdersAreLoaded, setIsOrdersAreLoaded] = useState(false)
  
     useEffect(()=>{
         if(! isOrdersAreLoaded){
             const token = localStorage.getItem("token")
 
-            axios.get(import.meta.env.VITE_API_URL + "/orders/10/1", {
+            axios.get(import.meta.env.VITE_API_URL + "/orders/" + pageSize+"/" +currentPage, {
                 headers:{
                 "Authorization": "Bearer " + token
                 }
             }).then(
                 (response)=>{
+                    console.log("API Response Data:", response.data);
                 setOrders(Array.isArray(response.data.orders) ? response.data.orders : []);
+                setTotalPages(response.data.totalPages);
+                setTotalOrders(response.data.total || response.data.totalOrders || 0);
                 setIsOrdersAreLoaded(true)
                 }
             ).catch(
@@ -42,6 +50,9 @@ export default function AdminOrdersPage() {
             <div className="sticky top-0 w-full h-[100px] rounded-lg bg-accent text-white flex items-center p-5 justify-between shadow-2xl"> 
                 <h1 className="text-2xl font-semibold">Orders</h1>
             </div>
+            <div className="flex justify-between items-center mt-5">
+                <span className="text-sm text-gray-600">Total Orders: <span className="font-semibold"> {totalOrders}</span></span>
+            </div>
 
             {isOrdersAreLoaded ? (
                 <>
@@ -56,6 +67,7 @@ export default function AdminOrdersPage() {
                                 <th className="text-center border border-primary p-4">Date</th>
                                 <th className="text-center border border-primary p-4">Total</th>
                                 <th className="text-center border border-primary p-4">Status</th>
+                                <th className="text-center border border-primary p-4">Actions</th>
                             </tr>
                         </thead>
 
@@ -75,6 +87,9 @@ export default function AdminOrdersPage() {
                                         <td className="text-center text-wrap border border-primary p-2">
                                             <span className="inline-block rounded-full bg-accent text-white px-3 py-1 text-xs font-medium">{item.status}</span>
                                         </td>
+                                        <td className="px-5 py-4">
+                                            <OrderDetailsModal order={item} refresh={()=>setIsOrdersAreLoaded(false)} />
+                                        </td>
                                     </tr>
                                 );
                             })}
@@ -86,7 +101,46 @@ export default function AdminOrdersPage() {
                             <p className="text-gray-500">No orders found.</p>
                         </div>
                     )}
+                    
+                    <div className="w-full flex justify-end items-center gap-3 mt-4">
+                        <button onClick={
+                            ()=>{
+                                if(currentPage > 1){
+                                    setCurrentPage(currentPage - 1);
+                                    setIsOrdersAreLoaded(false);
+                                }
+                            }
+                        }
+                        className ="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-200">
+                            Previous
+                        </button>
+                        <span className="text-sm text-gray-600">Page {currentPage} of {totalPages}</span>
+                        <button onClick={
+                            ()=>{
+                                setCurrentPage(currentPage + 1);
+                                setIsOrdersAreLoaded(false);
+                            }
+                        }
+                        className ="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-200">
+                            Next
+                        </button>
+
+                        <select
+                            value={pageSize}
+                            onChange={(e)=>{
+                                setPageSize(parseInt(e.target.value));
+                                setIsOrdersAreLoaded(false);
+                            }}
+                            className="ml-4 px-3 py-1 bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors duration-200">
+                                <option value={2}>2</option>
+                                <option value={5}>5</option>
+                                <option value={10}>10</option>
+                                <option value={20}>20</option>
+                                <option value={50}>50</option>
+                        </select>
+                    </div>
                 </>
+                
             ) : (
                 <LoadingAnimation />
             )}
