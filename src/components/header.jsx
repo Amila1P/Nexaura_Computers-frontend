@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { BiCart } from "react-icons/bi";
+import UserData from "./userData";
 
-export default function Header() {
+export default function Header({ user, setUser }) {
     return (
         <header className = "fixed top-0 left-0 z-50 w-full h-25 bg-accent flex items-center justify-center shadow-2xl">
             <Link to="/" className= "w-50 h-full absolute left-10 flex items-center justify-center">
@@ -11,6 +12,9 @@ export default function Header() {
                     <Link to="/" className= "text-white hover:text-gray-300">Home</Link>
                     <Link to="/products" className= "text-white hover:text-gray-300">Products</Link>
                     <Link to="/contact-us" className= "text-white hover:text-gray-300">Contact Us</Link>
+                </div>
+                <div className="h-[50px] absolute right-20 flex items-center justify-center gap-5">
+                    <UserData user={user} setUser={setUser} />
                 </div>
                 <Link to="/cart" className= "text-white hover:text-gray-300">
                     <BiCart className="text-white text-3xl hover:text-gray-300" />

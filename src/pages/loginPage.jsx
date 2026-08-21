@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-export default function LoginPage() {
+export default function LoginPage({ setUser }) {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -13,28 +13,22 @@ export default function LoginPage() {
         console.log("Email : ", email);
         console.log("Password : ", password);
 
-        //backend localhost:3000/users/login
-
         axios.post(import.meta.env.VITE_API_URL + "/users/login", {
             email : email,
             password : password
         }).then((response)=>{
 
-            //console.log("Login Successful.", response.data);
             toast.success("Login Successful.")
             localStorage.setItem("token", response.data.token);
+            setUser(response.data.user);
 
             if(response.data.isAdmin){
-                //redirect to admin dashbord
                 navigate("/admin")
             }else{
-                //redirect to user dashbord
                 navigate("/")
             }
 
         }).catch((error)=>{
-            //alert(error.response.data.message);
-            //console.log("Login Failed.", error);
             toast.error(error.response.data.message)
         });
     }
