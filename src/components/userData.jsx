@@ -8,20 +8,28 @@ export default function UserData({ user, setUser }) {
 
     useEffect(() => {
         const token = localStorage.getItem("token")
-        if (token) {
-            api.get("/users/me", {
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            }).then((response) => {
-                setUser(response.data)
-            }).catch((error) => {
-                console.log(error)
-            })
-        } else {
+
+        // If there's no token, ensure user state is null
+        if (!token) {
             setUser(null)
+            return
         }
-    }, [setUser])
+
+        // If we already have a user, no need to re-fetch
+        if (user) return
+
+        // Fetch current user when token exists but user state is empty
+        api.get("/users/me", {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        }).then((response) => {
+            setUser(response.data)
+        }).catch((error) => {
+            console.log(error)
+            setUser(null)
+        })
+    }, [user, setUser])
 
     return (
         <div>
