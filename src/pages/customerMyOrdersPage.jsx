@@ -49,84 +49,104 @@ export default function CustomerOrderPage() {
     )
 
     return (
-        <div className="w-full h-full overflow-y-scroll p-5">
-            <div className="sticky top-0 w-full h-[100px] rounded-lg bg-accent text-white flex items-center p-5 justify-between shadow-2xl"> 
-                <h1 className="text-2xl font-semibold">Orders</h1>
+        <div className="w-full h-full min-h-screen bg-[#0F0F12] text-gray-200 overflow-y-auto p-6">
+            {/* Header Area */}
+            <div className="sticky top-0 z-10 w-full h-[80px] rounded-2xl bg-[#2A2D3E]/80 backdrop-blur-xl border border-[#2A2D3E] text-white flex items-center px-8 justify-between shadow-2xl mb-6"> 
+                <div className="flex items-center gap-3">
+                    <div className="w-3 h-3 rounded-full bg-[#8B5CF6] shadow-[0_0_12px_#8B5CF6]"></div>
+                    <h1 className="text-2xl font-bold tracking-wide uppercase">My Orders</h1>
+                </div>
             </div>
-            <div className="flex justify-between items-center mt-5">
-                <span className="text-sm text-gray-600">Total Orders: <span className="font-semibold"> {totalOrders}</span></span>
+
+            {/* Total Orders Summary */}
+            <div className="flex justify-between items-center mb-6 px-2">
+                <span className="text-sm font-medium text-gray-400">
+                    Total Orders: <span className="text-[#8B5CF6] font-bold text-base ml-1">{totalOrders}</span>
+                </span>
             </div>
 
             {isOrdersAreLoaded ? (
                 <>
-                    <table className="mt-5 w-full text-secondary">
-                        <thead className="bg-accent/45 text-white">
-                            <tr>
-                                <th className="text-center border border-primary p-4">Order Id</th>
-                                <th className="text-center border border-primary p-4">Email</th>
-                                <th className="text-center border border-primary p-4">First Name</th>
-                                <th className="text-center border border-primary p-4">Last Name</th>
-                                <th className="text-center border border-primary p-4">Phone</th>
-                                <th className="text-center border border-primary p-4">Date</th>
-                                <th className="text-center border border-primary p-4">Total</th>
-                                <th className="text-center border border-primary p-4">Status</th>
-                                <th className="text-center border border-primary p-4">Actions</th>
-                            </tr>
-                        </thead>
+                    {/* Table Container */}
+                    <div className="w-full overflow-x-auto rounded-2xl border border-[#2A2D3E] bg-[#2A2D3E]/40 backdrop-blur-md shadow-2xl">
+                        <table className="w-full text-left text-sm text-gray-300">
+                            <thead className="bg-[#2A2D3E] text-xs uppercase tracking-wider text-gray-300 border-b border-[#0F0F12]">
+                                <tr>
+                                    <th className="text-center p-4">Order Id</th>
+                                    <th className="text-center p-4">Email</th>
+                                    <th className="text-center p-4">First Name</th>
+                                    <th className="text-center p-4">Last Name</th>
+                                    <th className="text-center p-4">Phone</th>
+                                    <th className="text-center p-4">Date</th>
+                                    <th className="text-center p-4">Total</th>
+                                    <th className="text-center p-4">Status</th>
+                                    <th className="text-center p-4">Actions</th>
+                                </tr>
+                            </thead>
 
-                        <tbody>
-                            {Array.isArray(orders) && orders.map((item) => {
-                                return (
-                                    <tr className="odd:bg-gray-200 even:bg-primary odd:text-black border-t-4 border-primary hover:bg-accent/45" key={item.orderId}>
-                                        <td className="text-center text-wrap border border-primary p-2">{item.orderId}</td>
-                                        <td className="text-center text-wrap border border-primary p-2">{item.email}</td>
-                                        <td className="text-center text-wrap border border-primary p-2">{item.firstName}</td>
-                                        <td className="text-center text-wrap border border-primary p-2">{item.lastName}</td>
-                                        <td className="text-center text-wrap border border-primary p-2">{item.phone}</td>
-                                        <td className="text-center text-wrap border border-primary p-2">{item.date}</td>
-                                        <td className="text-center text-wrap border border-primary p-2">
-                                            <span className="font-semibold text-gray-800">{getFormattedPrice(item.total)}</span>
-                                        </td>
-                                        <td className="text-center text-wrap border border-primary p-2">
-                                            <span className="inline-block rounded-full bg-accent text-white px-3 py-1 text-xs font-medium">{item.status}</span>
-                                        </td>
-                                        <td className="px-5 py-4">
-                                            <CustomerOrderDetailsModal order={item} />
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
+                            <tbody className="divide-y divide-[#2A2D3E]/60">
+                                {Array.isArray(orders) && orders.map((item) => {
+                                    return (
+                                        <tr className="bg-[#0F0F12]/60 hover:bg-[#2A2D3E]/80 transition-colors duration-200" key={item.orderId}>
+                                            <td className="text-center font-mono text-xs text-[#8B5CF6] p-4">{item.orderId}</td>
+                                            <td className="text-center p-4 text-gray-300">{item.email}</td>
+                                            <td className="text-center p-4">{item.firstName}</td>
+                                            <td className="text-center p-4">{item.lastName}</td>
+                                            <td className="text-center p-4 text-gray-400">{item.phone}</td>
+                                            <td className="text-center p-4 text-gray-400 text-xs">{item.date}</td>
+                                            <td className="text-center p-4">
+                                                <span className="font-bold text-white">{getFormattedPrice(item.total)}</span>
+                                            </td>
+                                            <td className="text-center p-4">
+                                                <span className="inline-block rounded-full bg-[#8B5CF6]/20 border border-[#8B5CF6]/50 text-[#8B5CF6] px-3 py-1 text-xs font-semibold uppercase tracking-wide">
+                                                    {item.status}
+                                                </span>
+                                            </td>
+                                            <td className="text-center p-4">
+                                                <CustomerOrderDetailsModal order={item} />
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
 
                     {orders.length === 0 && (
-                        <div className="text-center py-10">
-                            <p className="text-gray-500">No orders found.</p>
+                        <div className="text-center py-16 bg-[#2A2D3E]/20 rounded-2xl border border-[#2A2D3E] mt-4">
+                            <p className="text-gray-400 font-medium">No orders found.</p>
                         </div>
                     )}
                     
-                    <div className="w-full flex justify-end items-center gap-3 mt-4">
-                        <button onClick={
-                            ()=>{
-                                if(currentPage > 1){
-                                    setCurrentPage(currentPage - 1);
+                    {/* Pagination Controls */}
+                    <div className="w-full flex flex-col sm:flex-row justify-end items-center gap-4 mt-6 px-2">
+                        <div className="flex items-center gap-3">
+                            <button 
+                                onClick={() => {
+                                    if(currentPage > 1){
+                                        setCurrentPage(currentPage - 1);
+                                        setIsOrdersAreLoaded(false);
+                                    }
+                                }}
+                                disabled={currentPage === 1}
+                                className="px-4 py-2 bg-[#2A2D3E] text-gray-200 rounded-xl hover:bg-[#8B5CF6] hover:text-white disabled:opacity-40 disabled:hover:bg-[#2A2D3E] disabled:hover:text-gray-200 transition-all duration-200 text-xs font-semibold"
+                            >
+                                Previous
+                            </button>
+                            <span className="text-xs text-gray-400 font-medium">
+                                Page <span className="text-white font-bold">{currentPage}</span> of <span className="text-white font-bold">{totalPages}</span>
+                            </span>
+                            <button 
+                                onClick={() => {
+                                    setCurrentPage(currentPage + 1);
                                     setIsOrdersAreLoaded(false);
-                                }
-                            }
-                        }
-                        className ="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-200">
-                            Previous
-                        </button>
-                        <span className="text-sm text-gray-600">Page {currentPage} of {totalPages}</span>
-                        <button onClick={
-                            ()=>{
-                                setCurrentPage(currentPage + 1);
-                                setIsOrdersAreLoaded(false);
-                            }
-                        }
-                        className ="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-200">
-                            Next
-                        </button>
+                                }}
+                                disabled={currentPage >= totalPages}
+                                className="px-4 py-2 bg-[#2A2D3E] text-gray-200 rounded-xl hover:bg-[#8B5CF6] hover:text-white disabled:opacity-40 disabled:hover:bg-[#2A2D3E] disabled:hover:text-gray-200 transition-all duration-200 text-xs font-semibold"
+                            >
+                                Next
+                            </button>
+                        </div>
 
                         <select
                             value={pageSize}
@@ -134,18 +154,20 @@ export default function CustomerOrderPage() {
                                 setPageSize(parseInt(e.target.value));
                                 setIsOrdersAreLoaded(false);
                             }}
-                            className="ml-4 px-3 py-1 bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors duration-200">
-                                <option value={2}>2</option>
-                                <option value={5}>5</option>
-                                <option value={10}>10</option>
-                                <option value={20}>20</option>
-                                <option value={50}>50</option>
+                            className="bg-[#2A2D3E] border border-[#2A2D3E] text-gray-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#8B5CF6] cursor-pointer"
+                        >
+                            <option value={2}>2 per page</option>
+                            <option value={5}>5 per page</option>
+                            <option value={10}>10 per page</option>
+                            <option value={20}>20 per page</option>
+                            <option value={50}>50 per page</option>
                         </select>
                     </div>
                 </>
-                
             ) : (
-                <LoadingAnimation />
+                <div className="flex items-center justify-center min-h-[400px]">
+                    <LoadingAnimation />
+                </div>
             )}
         </div>
     );
