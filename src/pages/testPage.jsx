@@ -1,7 +1,7 @@
 import { useState } from "react"
 import uploadMedia from "../utils/mediaUpload"
 
-export default function TestPage() {
+{/*export default function TestPage() {
 
     const [file, setFile] = useState(null);
 
@@ -32,5 +32,15 @@ export default function TestPage() {
 
         </div>
 
+    )
+}*/}
+
+export default function TestPage() {
+    return(
+        <div className="w-full h-full">
+            <div className="bg-green-500 lg:bg-red-500 w-[300px] h-[300px]">
+
+            </div>
+        </div>
     )
 }

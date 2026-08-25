@@ -39,11 +39,11 @@ export default function ProductOverviewPage(){
                 </div>
             }
             {
-                status == "success" && <div className = "w-full h-full flex">
-                    <div className="w-1/2 h-full flex justify-center">
+                status == "success" && <div className = "w-full h-full lg:flex-row flex-col flex ">
+                    <div className="w-full lg:w-1/2 h-full flex justify-center ">
                         <ImageSlideShow images={product.images} />
                     </div>
-                    <div className="w-1/2 h-full flex flex-col p-5">
+                    <div className="w-full lg:w-1/2 h-full flex flex-col p-5">
                         <h1 className = "text-3xl font-bold mb-4">{product.name}
                             {
                                 product.altNames.map(
@@ -84,15 +84,16 @@ export default function ProductOverviewPage(){
                             <span className = "text-gray-700 font-semibold">{product.category}</span>
                         </div>
 
-                        <p className = "text-lg mt-5">
+                        <p className = "text-lg mt-5 lg:mb-0 mb-[150px]">
                             {
                                 product.description
                             }
                         </p>
-                        <div className = "flex gap-4 mt-5">
+                        <div className = "flex gap-4 fixed lg:static bottom-[82px] w-full backdrop-blur-2xl lg:backdrop:none justify-center lg:justify-start">
                             <button className = "bg-blue-500 hover:bg-blue-700 transition-color duration-200 text-white font-bold py-2 px-4 rounded mt-5" onClick = {
                                 ()=>{
                                     addToCart(product, 1);
+                                    toast.success("Product added to cart");
                                     console.log(getCart());
                                 }
                             }>

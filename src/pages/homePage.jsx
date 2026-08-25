@@ -5,8 +5,11 @@ import CartPage from "./cart.jsx"
 import CheckoutPage from "./checkout.jsx"
 import CustomerOrdePage from "./customerMyOrdersPage.jsx"
 import SetingsPage from "./settings.jsx"
+import TestPage from "./testPage.jsx"
+import BottomNavigationBar from "../components/bottomNavigationBar.jsx"
+import NotFoundPage from "./notFoundPage.jsx"
 
-export default function HomePage() {
+export default function HomePage({ user, setUser }) {
     return (
         <div className="w-full min-h-[calc(100vh-100px)] bg-white">
             <div className="w-full min-h-[calc(100vh-100px)] overflow-y-auto">
@@ -19,7 +22,11 @@ export default function HomePage() {
                     <Route path="/my-orders" element={<CustomerOrdePage/>}/>
                     <Route path="/settings" element={<SetingsPage/>}/>
                     <Route path="/checkout" element={<CheckoutPage/>}/>
+                    <Route path="/*" element={<NotFoundPage/>}/>
+
+                    <Route path="/test" element={<TestPage/>}/>
                 </Routes>
+                <BottomNavigationBar user={user} setUser={setUser}/>
             </div>
         </div>
     )

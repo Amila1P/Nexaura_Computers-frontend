@@ -23,7 +23,7 @@ export default function ProductPage() {
     }
 
     return (
-        <div className="w-full h-full border-[2px] flex justify-center flex-wrap">
+        <div className="w-full h-full flex justify-center flex-wrap mb-[100px]">
             {
                products.map((item) => {
                 return (

@@ -9,7 +9,7 @@ import { Toaster } from "react-hot-toast"
 import { useState } from "react"
 
 function App() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
 
   return (
         <div className= "w-full min-h-screen bg-primary">
@@ -18,7 +18,7 @@ function App() {
 
         <div className="pt-25 min-h-screen">
             <Routes>
-              <Route path="/*" element={<HomePage/>}></Route>
+              <Route path="/*" element={<HomePage user={user} setUser={setUser} />}></Route>
               <Route path="/admin/*" element={<AdminPage/>}></Route>
               <Route path="/test" element = {<TestPage/>}></Route>
               <Route path="/login" element = {<LoginPage user={user} setUser={setUser} />}></Route>

@@ -37,10 +37,10 @@ export default function LoginPage({ setUser }) {
     return (
         <div className = " w-full min-h-[calc(100vh-100px)] flex items-center justify-center bg-[url('/login-bg.jpg')] bg-cover" >
             
-            <div className = "w-1/2 h-full">
+            <div className = "w-0 lg:w-1/2 h-full">
             </div>
 
-            <div className = "w-1/2 h-full flex justify-center items-center ">
+            <div className = "w-80 lg:w-1/2 h-full flex justify-center items-center ">
                 <div className = "w-[400px] h-[500px] backdrop-blur-lg rounded-xl shadow-2xl flex flex-col justify-center items-center">
 
                     <h1 className="text-4xl font-bold mb-8 text-secondary">Sign In</h1>

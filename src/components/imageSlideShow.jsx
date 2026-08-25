@@ -4,7 +4,7 @@ export default function ImageSlideShow(props){
     const [activeImage, setActiveImage] = useState(0);
     const images = props.images || [];
     return (
-        <div className = "w-[500px] h-[500px] flex flex-col">
+        <div className = "w-[500px] lg:h-[500px] flex flex-col">
             {images.length > 0 ? (
                 <>
                 <img src={images[activeImage]} alt="Product" className = "w-full aspect-square object-cover" />
