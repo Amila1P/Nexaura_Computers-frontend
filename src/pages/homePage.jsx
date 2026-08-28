@@ -8,6 +8,7 @@ import SetingsPage from "./settings.jsx"
 import TestPage from "./testPage.jsx"
 import BottomNavigationBar from "../components/bottomNavigationBar.jsx"
 import NotFoundPage from "./notFoundPage.jsx"
+import RegisterPage from "./registerPage.jsx"
 
 export default function HomePage({ user, setUser }) {
     return (
@@ -23,6 +24,7 @@ export default function HomePage({ user, setUser }) {
                     <Route path="/settings" element={<SetingsPage/>}/>
                     <Route path="/checkout" element={<CheckoutPage/>}/>
                     <Route path="/*" element={<NotFoundPage/>}/>
+                    <Route path="/register" element={RegisterPage({ setUser })}/>
 
                     <Route path="/test" element={<TestPage/>}/>
                 </Routes>
