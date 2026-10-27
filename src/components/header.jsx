@@ -5,8 +5,8 @@ import { useState } from "react";
 import UserData from "./userData";
 
 const NAV_LINKS = [
-    { label: "Home",       to: "/" },
-    { label: "Products",   to: "/products" },
+    { label: "Home", to: "/" },
+    { label: "Products", to: "/products" },
     { label: "Contact Us", to: "/contact-us" },
 ];
 

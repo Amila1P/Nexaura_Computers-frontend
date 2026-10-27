@@ -103,7 +103,7 @@ export default function UserData({ user, setUser }) {
                         <div className="py-1">
                             {[
                                 { icon: HiOutlineShoppingBag, label: "My Orders", to: "/my-orders" },
-                                { icon: HiOutlineCog,         label: "Settings",  to: "/settings" },
+                                { icon: HiOutlineCog, label: "Settings", to: "/settings" },
                             ].map(({ icon: Icon, label, to }) => (
                                 <Link
                                     key={to}

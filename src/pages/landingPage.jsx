@@ -7,20 +7,20 @@ import { getFormattedPrice } from "../utils/priceFormat";
 
 /* ── Category data ── */
 const CATEGORIES = [
-    { label: "Gaming PCs",    icon: "🖥️",  query: "Gaming PC" },
-    { label: "Laptops",       icon: "💻",  query: "Laptop" },
-    { label: "Components",    icon: "⚙️",  query: "Component" },
-    { label: "Monitors",      icon: "🖵",  query: "Monitor" },
-    { label: "Peripherals",   icon: "🎮",  query: "Peripheral" },
-    { label: "Accessories",   icon: "🔌",  query: "Accessory" },
+    { label: "Gaming PCs", icon: "🖥️", query: "Gaming PC" },
+    { label: "Laptops", icon: "💻", query: "Laptop" },
+    { label: "Components", icon: "⚙️", query: "Component" },
+    { label: "Monitors", icon: "🖵", query: "Monitor" },
+    { label: "Peripherals", icon: "🎮", query: "Peripheral" },
+    { label: "Accessories", icon: "🔌", query: "Accessory" },
 ];
 
 /* ── Trust badges ── */
 const TRUST = [
-    { icon: HiTruck,         title: "Free Delivery",     desc: "On orders over LKR 10,000" },
-    { icon: HiShieldCheck,   title: "Genuine Products",  desc: "100% authentic, warranty included" },
-    { icon: BiSupport,       title: "24/7 Support",      desc: "Expert help, anytime" },
-    { icon: HiStar,          title: "Top Rated",         desc: "Trusted by 50,000+ customers" },
+    { icon: HiTruck, title: "Free Delivery", desc: "On orders over LKR 10,000" },
+    { icon: HiShieldCheck, title: "Genuine Products", desc: "100% authentic, warranty included" },
+    { icon: BiSupport, title: "24/7 Support", desc: "Expert help, anytime" },
+    { icon: HiStar, title: "Top Rated", desc: "Trusted by 50,000+ customers" },
 ];
 
 /* ── Hero slides ── */
@@ -57,7 +57,7 @@ export default function LandingPage() {
     useEffect(() => {
         api.get("/products").then(res => {
             setProducts(res.data.slice(0, 4));
-        }).catch(() => {});
+        }).catch(() => { });
     }, []);
 
     const hero = HERO_SLIDES[slide];
@@ -119,7 +119,7 @@ export default function LandingPage() {
 
                         {/* Stats row */}
                         <div className="flex flex-wrap gap-8 mt-4 animate-fade-in-up stagger-4">
-                            {[["50K+","Happy Customers"], ["5K+","Products Listed"], ["99%","Positive Reviews"]].map(([num, lbl]) => (
+                            {[["50K+", "Happy Customers"], ["5K+", "Products Listed"], ["99%", "Positive Reviews"]].map(([num, lbl]) => (
                                 <div key={lbl}>
                                     <p className="text-2xl font-black gradient-text">{num}</p>
                                     <p className="text-xs mt-0.5" style={{ color: "#7A8BA3" }}>{lbl}</p>
@@ -321,7 +321,7 @@ export default function LandingPage() {
                 <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <p className="text-sm" style={{ color: "#7A8BA3" }}>© 2025 NexAura Computers. All rights reserved.</p>
                     <div className="flex gap-6">
-                        {["Privacy Policy","Terms of Service","Sitemap"].map(l => (
+                        {["Privacy Policy", "Terms of Service", "Sitemap"].map(l => (
                             <Link key={l} to="/" className="text-xs transition-colors" style={{ color: "#7A8BA3" }}
                                 onMouseEnter={e => e.currentTarget.style.color = "#4F8EF7"}
                                 onMouseLeave={e => e.currentTarget.style.color = "#7A8BA3"}

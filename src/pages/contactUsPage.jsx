@@ -25,10 +25,10 @@ const CONTACT_INFO = [
 ];
 
 const FAQ = [
-    { q: "What is your return policy?",      a: "We offer a 7-day hassle-free return policy on all products. Items must be in original packaging and unopened." },
-    { q: "Do you offer warranty?",           a: "Yes — all products carry the manufacturer's official warranty. We also offer extended warranty plans on select items." },
-    { q: "How long does delivery take?",     a: "Standard delivery within Colombo takes 1–2 business days. Island-wide delivery takes 3–5 business days." },
-    { q: "Can I build a custom PC?",         a: "Absolutely! Contact us via the form or phone and our expert team will help you build your perfect rig within budget." },
+    { q: "What is your return policy?", a: "We offer a 7-day hassle-free return policy on all products. Items must be in original packaging and unopened." },
+    { q: "Do you offer warranty?", a: "Yes — all products carry the manufacturer's official warranty. We also offer extended warranty plans on select items." },
+    { q: "How long does delivery take?", a: "Standard delivery within Colombo takes 1–2 business days. Island-wide delivery takes 3–5 business days." },
+    { q: "Can I build a custom PC?", a: "Absolutely! Contact us via the form or phone and our expert team will help you build your perfect rig within budget." },
 ];
 
 export default function ContactUsPage() {
