@@ -9,3 +9,6 @@ export default function getFormattedPrice(price){
         return "LKR " + priceInNumber.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 }
+
+// Named export alias for convenience
+export { getFormattedPrice };

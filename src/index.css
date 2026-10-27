@@ -1,38 +1,287 @@
 @import "tailwindcss";
 
+/* =============================================
+   NEXAURA DESIGN SYSTEM — COLOR TOKENS
+   Premium Dark Theme for Computer E-Commerce
+   ============================================= */
 @theme {
-    --color-primary :  #0F0F12;
-    --color-secondary : #2A2D3E;
-    --color-accent : #8B5CF6;
-}
-/* ================================
-   Chrome / Edge / Safari Scrollbar
-   ================================ */
+    /* Backgrounds */
+    --color-primary   : #080C14;   /* Deep space black — main bg */
+    --color-surface   : #0F1623;   /* Slightly lighter — sections */
+    --color-card      : #151D2E;   /* Product cards & panels */
+    --color-elevated  : #1C2740;   /* Modals, dropdowns */
+    --color-border    : #1E2D45;   /* Subtle borders */
 
-/* Set scrollbar width */
-::-webkit-scrollbar {
-  width: 8px;
-  
+    /* Text */
+    --color-text-primary : #E8EDF5;   /* Main text */
+    --color-text-muted   : #7A8BA3;   /* Sub-text / labels */
+
+    /* Legacy aliases (keep for backward compat with existing components) */
+    --color-secondary : #151D2E;
+    --color-accent    : #4F8EF7;   /* Electric blue — CTAs, links */
+
+    /* Semantic */
+    --color-accent-hover  : #3B7EE8;   /* Darker blue on hover */
+    --color-price         : #10B981;   /* Emerald green — price tags */
+    --color-price-old     : #F04E37;   /* Red — crossed-out price */
+    --color-badge         : #F59E0B;   /* Amber — sale/hot badge */
+    --color-success       : #10B981;
+    --color-danger        : #F04E37;
+    --color-warning       : #F59E0B;
 }
 
-/* Scrollbar background (track) */
-::-webkit-scrollbar-track {
-  background: transparent;
+/* =============================================
+   GLOBAL BASE STYLES
+   ============================================= */
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
-/* Scrollbar draggable part (thumb) */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #080C14;
+    color: #E8EDF5;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', 'Inter', sans-serif;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+/* =============================================
+   GLOBAL BUTTON STYLES
+   ============================================= */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #4F8EF7, #3B7EE8);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(79, 142, 247, 0.3);
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(79, 142, 247, 0.45);
+    background: linear-gradient(135deg, #5B99FF, #4F8EF7);
+}
+.btn-primary:active { transform: translateY(0); }
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    color: #4F8EF7;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: 10px;
+    border: 1.5px solid #4F8EF7;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.btn-secondary:hover {
+    background: rgba(79, 142, 247, 0.1);
+    transform: translateY(-1px);
+}
+
+.btn-danger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #F04E37, #D93B25);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.btn-danger:hover { transform: translateY(-1px); opacity: 0.9; }
+
+/* =============================================
+   FORM INPUT STYLES
+   ============================================= */
+.form-input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: #0F1623;
+    border: 1.5px solid #1E2D45;
+    border-radius: 10px;
+    color: #E8EDF5;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+}
+.form-input::placeholder { color: #7A8BA3; }
+.form-input:focus {
+    border-color: #4F8EF7;
+    box-shadow: 0 0 0 3px rgba(79, 142, 247, 0.15);
+}
+
+/* =============================================
+   CARD BASE
+   ============================================= */
+.card {
+    background: #151D2E;
+    border: 1px solid #1E2D45;
+    border-radius: 14px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    border-color: #4F8EF7;
+}
+
+/* =============================================
+   GRADIENT UTILITIES
+   ============================================= */
+.gradient-text {
+    background: linear-gradient(135deg, #4F8EF7, #9D6FFF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.gradient-bg-blue {
+    background: linear-gradient(135deg, #4F8EF7 0%, #9D6FFF 100%);
+}
+
+.hero-glow {
+    position: relative;
+}
+.hero-glow::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(ellipse, rgba(79,142,247,0.12) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* =============================================
+   SCROLLBAR
+   ============================================= */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background-color: #888;  /* grey thumb color */
-  border-radius: 4px;       /* rounded corners */
+    background: #1E2D45;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover { background: #4F8EF7; }
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #1E2D45 transparent;
 }
 
+/* =============================================
+   ANIMATIONS
+   ============================================= */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+@keyframes shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position:  200% 0; }
+}
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 8px rgba(79,142,247,0.4); }
+    50%       { box-shadow: 0 0 20px rgba(79,142,247,0.7); }
+}
 
-/* ================================
-   Firefox Scrollbar Styling
-   ================================ */
+.animate-fade-in-up {
+    animation: fadeInUp 0.5s ease forwards;
+}
+.animate-fade-in {
+    animation: fadeIn 0.4s ease forwards;
+}
 
-/* Applies to all elements in Firefox */
-* {
-  scrollbar-width: thin;                 /* makes scrollbar thinner */
-  scrollbar-color: #888 transparent;     /* thumb color + track color */
+/* Staggered animation delays for lists */
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.10s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.20s; }
+.stagger-5 { animation-delay: 0.25s; }
+.stagger-6 { animation-delay: 0.30s; }
+
+/* Skeleton loader */
+.skeleton {
+    background: linear-gradient(90deg, #151D2E 25%, #1E2D45 50%, #151D2E 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+}
+
+/* =============================================
+   BADGE
+   ============================================= */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+.badge-sale  { background: rgba(240,78,55,0.15);  color: #F04E37; border: 1px solid rgba(240,78,55,0.3); }
+.badge-new   { background: rgba(79,142,247,0.15); color: #4F8EF7; border: 1px solid rgba(79,142,247,0.3); }
+.badge-hot   { background: rgba(245,158,11,0.15); color: #F59E0B; border: 1px solid rgba(245,158,11,0.3); }
+
+/* =============================================
+   SECTION HELPERS
+   ============================================= */
+.section-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #E8EDF5;
+    margin-bottom: 0.4rem;
+}
+.section-subtitle {
+    font-size: 0.95rem;
+    color: #7A8BA3;
+    margin-bottom: 2rem;
+}
+.divider {
+    width: 48px;
+    height: 3px;
+    background: linear-gradient(90deg, #4F8EF7, #9D6FFF);
+    border-radius: 2px;
+    margin-bottom: 1rem;
 }

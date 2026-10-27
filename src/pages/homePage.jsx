@@ -9,31 +9,28 @@ import TestPage from "./testPage.jsx"
 import BottomNavigationBar from "../components/bottomNavigationBar.jsx"
 import NotFoundPage from "./notFoundPage.jsx"
 import RegisterPage from "./registerPage.jsx"
+import LandingPage from "./landingPage.jsx"
+import ContactUsPage from "./contactUsPage.jsx"
 
 export default function HomePage({ user, setUser }) {
     return (
-        <div className="w-full min-h-[calc(100vh-100px)] bg-white">
-            <div className="w-full min-h-[calc(100vh-100px)] overflow-y-auto">
+        <div className="w-full min-h-screen" style={{ background: "#080C14" }}>
+            <div className="w-full min-h-[calc(100vh-70px)] pt-[70px]">
                 <Routes>
-                    <Route path="/" element={<h1>Welcome to the Home Page</h1>}/>
-                    <Route path="/products" element={<ProductPage/>}/>
-                    <Route path="/contact-us" element={<h1>Welcome to the Contact Us Page</h1>}/>
-                    <Route path="/overview/:productId" element={<ProductOverviewPage/>}/>
-                    <Route path="/cart" element={<CartPage/>}/>
-                    <Route path="/my-orders" element={<CustomerOrdePage/>}/>
-                    <Route path="/settings" element={<SetingsPage/>}/>
-                    <Route path="/checkout" element={<CheckoutPage/>}/>
-                    <Route path="/*" element={<NotFoundPage/>}/>
-                    <Route path="/register" element={RegisterPage({ setUser })}/>
-
-                    <Route path="/test" element={<TestPage/>}/>
+                    <Route path="/"            element={<LandingPage />} />
+                    <Route path="/products"    element={<ProductPage />} />
+                    <Route path="/contact-us"  element={<ContactUsPage />} />
+                    <Route path="/overview/:productId" element={<ProductOverviewPage />} />
+                    <Route path="/cart"        element={<CartPage />} />
+                    <Route path="/my-orders"   element={<CustomerOrdePage />} />
+                    <Route path="/settings"    element={<SetingsPage />} />
+                    <Route path="/checkout"    element={<CheckoutPage />} />
+                    <Route path="/register"    element={<RegisterPage setUser={setUser} />} />
+                    <Route path="/test"        element={<TestPage />} />
+                    <Route path="/*"           element={<NotFoundPage />} />
                 </Routes>
-                <BottomNavigationBar user={user} setUser={setUser}/>
+                <BottomNavigationBar user={user} setUser={setUser} />
             </div>
         </div>
     )
 }
-
-// Deep Navy Blue (#0B192C) - Primary color
-// Crisp White / Light Gray (#F3F4F6) -Secondary color
-// Electric Cyan (#00D2C4) or Vivid Blue (#2563EB) - Accent color

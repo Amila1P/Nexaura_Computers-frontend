@@ -1,23 +1,49 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { GoHome } from "react-icons/go";
-import { CiSearch } from "react-icons/ci";
-import { CiShoppingCart } from "react-icons/ci";
-import UserData from "./userData.jsx";
+import { CiSearch, CiShoppingCart } from "react-icons/ci";
+import { CiUser } from "react-icons/ci";
+import { Link as RouterLink } from "react-router-dom";
 
+export default function BottomNavigationBar({ user }) {
+    const location = useLocation();
 
-export default function BottomNavigationBar({ user, setUser }){
-    return(
-        <div className = "flex lg:hidden fixed bottom-0 w-full h-[80px] bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] justify-evenly py-2">
-            <Link to="/" className = "h-full aspect-square flex flex-col text-accent shadow-2xl shadow-accent text-3xl items-center justify-center">
-                <GoHome className="text-3xl text-gray-500 hover:text-gray-300"/>
-            </Link>
-            <Link to="/search" className = "h-full aspect-square flex flex-col text-accent shadow-2xl shadow-accent text-3xl items-center justify-center">
-                <CiSearch className="text-3xl text-gray-500 hover:text-gray-300"/>
-            </Link>
-            <Link to="/cart" className = "h-full aspect-square flex flex-col text-accent shadow-2xl shadow-accent text-3xl items-center justify-center">
-                <CiShoppingCart className="text-3xl text-gray-500 hover:text-gray-300"/>
-            </Link>
-            <UserData user={user} setUser={setUser}/>
-        </div>
-    )
+    const NAV = [
+        { to: "/",        icon: GoHome,          label: "Home" },
+        { to: "/products", icon: CiSearch,        label: "Products" },
+        { to: "/cart",    icon: CiShoppingCart,   label: "Cart" },
+        { to: user ? "/settings" : "/login", icon: CiUser, label: user ? "Account" : "Sign In" },
+    ];
+
+    return (
+        <nav
+            className="flex lg:hidden fixed bottom-0 left-0 w-full z-40"
+            style={{
+                background: "rgba(15,22,35,0.97)",
+                backdropFilter: "blur(16px)",
+                borderTop: "1px solid #1E2D45",
+                paddingBottom: "env(safe-area-inset-bottom)",
+            }}
+        >
+            {NAV.map(({ to, icon: Icon, label }) => {
+                const isActive = location.pathname === to || (to !== "/" && location.pathname.startsWith(to));
+                return (
+                    <Link
+                        key={to}
+                        to={to}
+                        className="flex-1 flex flex-col items-center justify-center gap-1 py-3 transition-colors duration-200"
+                        style={{ color: isActive ? "#4F8EF7" : "#7A8BA3", textDecoration: "none" }}
+                    >
+                        <Icon className="text-2xl" />
+                        <span className="text-[10px] font-medium">{label}</span>
+                        {isActive && (
+                            <span
+                                className="absolute bottom-0 w-8 h-[2px] rounded-full"
+                                style={{ background: "#4F8EF7" }}
+                            />
+                        )}
+                    </Link>
+                );
+            })}
+        </nav>
+    );
 }
