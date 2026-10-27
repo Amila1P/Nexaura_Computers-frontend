@@ -2,12 +2,38 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useGoogleLogin } from '@react-oauth/google';
+import { FcGoogle } from "react-icons/fc";
 
 export default function LoginPage({ setUser }) {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const googleLogin = useGoogleLogin(
+        {
+            onSuccess: (response) => {
+                api.post("/users/google-login",{
+                    token: response.access_token
+                }).then((response)=>{
+                    toast.success("Google login successful.");
+                    localStorage.setItem("token", response.data.token);
+
+                    if(response.data.isAdmin){
+                        navigate("/admin")
+                    }else{
+                        navigate("/")
+                    }
+                }).catch((error)=>{
+                    toast.error("Google login failed.")
+                })
+                console.log(response.data)
+            },
+            onError: (error) => {
+                toast.error("Google login failed.")
+            }
+        }
+    )
 
     function handleLogin() {
         console.log("Email : ", email);
@@ -74,6 +100,10 @@ export default function LoginPage({ setUser }) {
                 
                     <button onClick={handleLogin} className="w-3/4 p-3 mb-6 rounded-lg bg-accent text-primary font-bold hover:bg-accent-dark transition duration-300">
                         Sign In
+                    </button>
+                    <button onClick={() => googleLogin()} className="w-3/4 p-3 mb-6 rounded-lg bg-white text-gray-500 font-bold hover:text-blue-600 transition duration-300 flex gap-2 items-center justify-center">
+                        <FcGoogle />
+                        Sign In with Google
                     </button>
                     <p className = "w-3/4 text-center">Don't have an account? <Link to="/register" className="text-accent">Register</Link></p> 
                 </div>

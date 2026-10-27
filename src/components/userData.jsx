@@ -19,15 +19,32 @@ export default function UserData({ user, setUser }) {
         // If we already have a user, no need to re-fetch
         if (user) return
 
+        try {
+            const payloadBase64 = token.split(".")[1]
+            const payload = JSON.parse(atob(payloadBase64))
+
+            if (payload?.exp && Date.now() >= payload.exp * 1000) {
+                localStorage.removeItem("token")
+                setUser(null)
+                return
+            }
+        } catch {
+            localStorage.removeItem("token")
+            setUser(null)
+            return
+        }
+
         // Fetch current user when token exists but user state is empty
         api.get("/users/me", {
             headers: {
-                "Authorization": `Bearer ${token}`
+                "Authorization": "Bearer " + token
             }
         }).then((response) => {
             setUser(response.data)
         }).catch((error) => {
-            console.log(error)
+            if (error?.response?.status === 401) {
+                localStorage.removeItem("token")
+            }
             setUser(null)
         })
     }, [user, setUser])
@@ -37,7 +54,7 @@ export default function UserData({ user, setUser }) {
             {
                 user ?
                 <div className="flex h-full lg:w-[150px] lg:h-[50px] aspect-square relative rounded-lg">
-                    <img src={user.profilePicture} alt="Profile Picture" className="w-full lg:w-auto aspect-square absolute lg:static rounded-lg"></img>
+                    <img src={user.profilePicture} referrerPolicy="no-referrer" alt="Profile Picture" className="w-full lg:w-auto aspect-square absolute lg:static rounded-lg"></img>
                     
                     <select onChange={(e) => {
                         if (e.target.value === "option2") {
