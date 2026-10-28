@@ -1,13 +1,23 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import ProductCard from "../components/productCard";
 import { HiSearch } from "react-icons/hi";
 
 export default function ProductPage() {
+    const [searchParams, setSearchParams] = useSearchParams();
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [search, setSearch] = useState("");
+    // Initialize search from URL ?q= param (set by the header search widget)
+    const [search, setSearch] = useState(() => searchParams.get("q") || "");
     const [activeCategory, setActiveCategory] = useState("All");
+
+    // Keep the URL ?q= param in sync with the search box so URLs are shareable/bookmarkable
+    useEffect(() => {
+        const params = {};
+        if (search) params.q = search;
+        setSearchParams(params, { replace: true });
+    }, [search]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         axios.get(import.meta.env.VITE_API_URL + "/products")
@@ -69,13 +79,14 @@ export default function ProductPage() {
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
                     {/* Search */}
                     <div className="relative flex-1 max-w-md">
-                        <HiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-lg" style={{ color: "#7A8BA3" }} />
+                        {/* Icon sits at left-3.5 (~14px); input padded pl-11 (~44px) = ~30px gap between icon right-edge and text */}
+                        <HiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-lg" style={{ color: "#7A8BA3" }} />
                         <input
                             type="text"
                             placeholder="Search products or brands…"
                             value={search}
                             onChange={e => setSearch(e.target.value)}
-                            className="form-input pl-10"
+                            className="form-input pl-11"
                             id="product-search"
                         />
                     </div>
@@ -105,7 +116,7 @@ export default function ProductPage() {
                         <span className="text-6xl">🔍</span>
                         <h2 className="text-xl font-bold" style={{ color: "#E8EDF5" }}>No products found</h2>
                         <p className="text-sm" style={{ color: "#7A8BA3" }}>Try adjusting your search or category filters.</p>
-                        <button className="btn-secondary mt-2" onClick={() => { setSearch(""); setActiveCategory("All"); }}>
+                        <button className="btn-secondary mt-2" onClick={() => { setSearch(""); setActiveCategory("All"); setSearchParams({}); }}>
                             Clear Filters
                         </button>
                     </div>

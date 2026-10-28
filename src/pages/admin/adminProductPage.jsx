@@ -1,116 +1,212 @@
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
+import { BiEdit } from "react-icons/bi";
+import { HiCube } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { TbTrash } from "react-icons/tb";
-import { BiEdit } from "react-icons/bi";
-import toast from "react-hot-toast";
 import LoadingAnimation from "../../components/LoadingAnimation.jsx";
 import ProductDeleteModal from "../../components/ProductDeleteModal.jsx";
 
 export default function AdminProductPage() {
 
-    const [products ,setProducts] = useState([]);
-    const [isProductAreLoaded, setIsProductAreLoaded] = useState(false)
- 
-    useEffect(()=>{
-        if(! isProductAreLoaded){
-            const token = localStorage.getItem("token")
+    /* ══ LOGIC — unchanged ══ */
+    const [products,           setProducts]           = useState([]);
+    const [isProductAreLoaded, setIsProductAreLoaded] = useState(false);
 
+    useEffect(() => {
+        if (!isProductAreLoaded) {
+            const token = localStorage.getItem("token");
             axios.get(import.meta.env.VITE_API_URL + "/products", {
-                headers:{
-                "Authorization": "Bearer " + token
-                }
-            }).then(
-                (response)=>{
+                headers: { "Authorization": "Bearer " + token }
+            }).then(response => {
                 setProducts(Array.isArray(response.data) ? response.data : []);
-                setIsProductAreLoaded(true)
-                }
-            ).catch(
-                (error)=>{
+                setIsProductAreLoaded(true);
+            }).catch(error => {
                 console.log(error);
-                }
-            )
+            });
         }
-      
-      }, [isProductAreLoaded]
-    )
+    }, [isProductAreLoaded]);
+    /* ══ end LOGIC ══ */
 
     return (
-        <div className = "w-full h-full overflow-y-scroll p-5">
+        <div className="w-full min-h-full p-6" style={{ background: "#080C14" }}>
 
-            <div className = "sticky top-0 w-full h-[100px] rounded-lg bg-accent text-white flex items-center p-5 justify-between shadow-2xl"> 
-                <h1 className = "text-2xl font-semibold">Products</h1>
+            {/* ── Page header ── */}
+            <div className="flex items-center justify-between mb-6">
+                <div>
+                    <div className="flex items-center gap-3 mb-1">
+                        <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                            style={{ background: "rgba(79,142,247,0.12)", border: "1px solid rgba(79,142,247,0.2)" }}>
+                            <HiCube className="text-lg" style={{ color: "#4F8EF7" }} />
+                        </div>
+                        <h1 className="text-2xl font-black" style={{ color: "#E8EDF5", fontFamily: "'Outfit', sans-serif" }}>
+                            Products
+                        </h1>
+                    </div>
+                    <p className="text-sm pl-12" style={{ color: "#7A8BA3" }}>
+                        {products.length} product{products.length !== 1 ? "s" : ""} in the catalogue
+                    </p>
+                </div>
+
+                {/* Add product button */}
+                <Link to="/admin/add-products" className="btn-primary text-sm gap-2">
+                    <FaPlus className="text-sm" /> Add Product
+                </Link>
             </div>
 
-
-            {
-                isProductAreLoaded ?
-                <table className="mt-5 w-full text-secondary">
-                <thead className="bg-accent/45 text-white">
-                    <tr>
-                        <th className = "text-center border border-primary p-4">Image</th>
-                        <th className = "text-center border border-primary p-4">ProductId</th>
-                        <th className = "text-center border border-primary p-4">Name</th>
-                        <th className = "text-center border border-primary p-4">Price</th>
-                        <th className = "text-center border border-primary p-4">Labelled Price</th>
-                        <th className = "text-center border border-primary p-4">Brand</th>
-                        <th className = "text-center border border-primary p-4">Model</th>
-                        <th className = "text-center border border-primary p-4">Category</th>
-                        <th className = "text-center border border-primary p-4">Availability</th>
-                        <th className = "text-center border border-primary p-4">Stock</th>
-                        <th className = "text-center border border-primary p-4">Actions</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {
-                        Array.isArray(products) && products.map(
-                            (item)=>{
-                                return(
-                                    <tr className="odd:bg-gray-200 even:bg-primary odd:text-black border-t-4 border-primary hover:bg-accent/45" key={item.productId}>
-                                        <td className = "text-center border border-primary p-4 rounded-full">
-                                            <img src={item.images?.[0] || "/placeholder.png"} alt={item.name} width="80" />
-                                        </td>
-                                        <td className = "text-center text-wrap border border-primary p-2">{item.productId}</td>
-                                        <td className = "text-center text-wrap border border-primary p-2">{item.name}</td>
-                                        <td className = "text-center text-wrap border border-primary p-2">{item.price}</td>
-                                        <td className = "text-center text-wrap border border-primary p-2">{item.labelledPrice}</td>
-                                        <td className = "text-center text-wrap border border-primary p-2">{item.brand}</td>
-                                        <td className = "text-center text-wrap border border-primary p-2">{item.model}</td>
-                                        <td className = "text-center text-wrap border border-primary p-2">{item.category}</td>
-                                        <td className = "text-center text-wrap border border-primary p-2">{item.availability ? 'In Stock' : 'Out of Stock'}</td>
-                                        <td className = "text-center text-wrap border border-primary p-2">{item.stock}</td>
-                                        <td className = "text-center text-wrap border border-primary p-2">
-                                            
-                                            <ProductDeleteModal
-                                                product={item}
-                                                refresh={
-                                                    ()=>{
-                                                        setIsProductAreLoaded(false)
-                                                    }
-                                                }
-                                            />
-                                            
-                                            <Link to="/admin/edit-products" state={ item } >
-                                                <BiEdit className="text-2xl text-blue-500 cursor-pointer hover:text-blue-700" />
-                                            </Link>
-                                        </td>
+            {/* ── Content ── */}
+            {isProductAreLoaded ? (
+                <>
+                    {/* Table card */}
+                    <div className="rounded-2xl overflow-hidden"
+                        style={{ background: "#0F1623", border: "1px solid #1E2D45" }}>
+                        <div className="overflow-x-auto">
+                            <table className="w-full">
+                                <thead>
+                                    <tr style={{ background: "#151D2E", borderBottom: "1px solid #1E2D45" }}>
+                                        {["", "ID", "Name", "Category", "Brand", "Price", "Stock", "Status", "Actions"].map(h => (
+                                            <th key={h}
+                                                className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider whitespace-nowrap"
+                                                style={{ color: "#7A8BA3" }}>
+                                                {h}
+                                            </th>
+                                        ))}
                                     </tr>
-                                )
-                            }
-                        )
-                    }
-                </tbody>
-                </table>
+                                </thead>
+                                <tbody>
+                                    {Array.isArray(products) && products.map((item, idx) => (
+                                        <tr
+                                            key={item.productId}
+                                            className="transition-colors duration-150"
+                                            style={{
+                                                borderBottom: "1px solid #1E2D45",
+                                                background: idx % 2 === 0 ? "transparent" : "rgba(21,29,46,0.4)",
+                                            }}
+                                            onMouseEnter={e => e.currentTarget.style.background = "rgba(79,142,247,0.04)"}
+                                            onMouseLeave={e => e.currentTarget.style.background = idx % 2 === 0 ? "transparent" : "rgba(21,29,46,0.4)"}
+                                        >
+                                            {/* Thumbnail */}
+                                            <td className="px-4 py-3">
+                                                <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0"
+                                                    style={{ background: "#151D2E", border: "1px solid #1E2D45" }}>
+                                                    <img
+                                                        src={item.images?.[0] || "/placeholder.png"}
+                                                        alt={item.name}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                </div>
+                                            </td>
 
-                :
-                <LoadingAnimation/>
-            }
+                                            {/* Product ID */}
+                                            <td className="px-4 py-3">
+                                                <span className="text-xs font-mono font-semibold px-2 py-1 rounded-md"
+                                                    style={{ background: "rgba(30,45,69,0.6)", color: "#4F8EF7" }}>
+                                                    {item.productId}
+                                                </span>
+                                            </td>
 
+                                            {/* Name */}
+                                            <td className="px-4 py-3" style={{ maxWidth: "200px" }}>
+                                                <p className="text-sm font-semibold line-clamp-2" style={{ color: "#E8EDF5" }}>
+                                                    {item.name}
+                                                </p>
+                                                {item.model && (
+                                                    <p className="text-xs mt-0.5" style={{ color: "#7A8BA3" }}>{item.model}</p>
+                                                )}
+                                            </td>
 
-            <Link to="/admin/add-products" className ="fixed bottom-8 right-16 w-[60px] h-[60px] bg-accent flex justify-center items-center text-white text-3xl rounded-full hover:bg-black hover:text-accent" >
-                <FaPlus />
-            </Link>
+                                            {/* Category */}
+                                            <td className="px-4 py-3">
+                                                <span className="text-xs font-semibold px-2.5 py-1 rounded-lg"
+                                                    style={{ background: "rgba(157,111,255,0.1)", color: "#9D6FFF", border: "1px solid rgba(157,111,255,0.2)" }}>
+                                                    {item.category}
+                                                </span>
+                                            </td>
+
+                                            {/* Brand */}
+                                            <td className="px-4 py-3 text-sm" style={{ color: "#7A8BA3" }}>
+                                                {item.brand || "—"}
+                                            </td>
+
+                                            {/* Price */}
+                                            <td className="px-4 py-3">
+                                                <p className="text-sm font-bold" style={{ color: "#10B981" }}>
+                                                    LKR {Number(item.price).toLocaleString()}
+                                                </p>
+                                                {item.labelledPrice > item.price && (
+                                                    <p className="text-xs line-through" style={{ color: "#F04E37" }}>
+                                                        LKR {Number(item.labelledPrice).toLocaleString()}
+                                                    </p>
+                                                )}
+                                            </td>
+
+                                            {/* Stock */}
+                                            <td className="px-4 py-3">
+                                                <span className="text-sm font-semibold"
+                                                    style={{ color: item.stock > 10 ? "#10B981" : item.stock > 0 ? "#F59E0B" : "#F04E37" }}>
+                                                    {item.stock}
+                                                </span>
+                                            </td>
+
+                                            {/* Availability */}
+                                            <td className="px-4 py-3">
+                                                {item.availability || item.isAvailable ? (
+                                                    <span className="text-xs font-bold px-2.5 py-1 rounded-lg"
+                                                        style={{ background: "rgba(16,185,129,0.1)", color: "#10B981", border: "1px solid rgba(16,185,129,0.2)" }}>
+                                                        In Stock
+                                                    </span>
+                                                ) : (
+                                                    <span className="text-xs font-bold px-2.5 py-1 rounded-lg"
+                                                        style={{ background: "rgba(240,78,55,0.1)", color: "#F04E37", border: "1px solid rgba(240,78,55,0.2)" }}>
+                                                        Out of Stock
+                                                    </span>
+                                                )}
+                                            </td>
+
+                                            {/* Actions */}
+                                            <td className="px-4 py-3">
+                                                <div className="flex items-center gap-2">
+                                                    <ProductDeleteModal
+                                                        product={item}
+                                                        refresh={() => setIsProductAreLoaded(false)}
+                                                    />
+                                                    <Link
+                                                        to="/admin/edit-products"
+                                                        state={item}
+                                                        className="flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-200"
+                                                        style={{ background: "rgba(79,142,247,0.1)", color: "#4F8EF7", border: "1px solid rgba(79,142,247,0.2)" }}
+                                                        onMouseEnter={e => { e.currentTarget.style.background = "rgba(79,142,247,0.2)"; }}
+                                                        onMouseLeave={e => { e.currentTarget.style.background = "rgba(79,142,247,0.1)"; }}
+                                                        title="Edit product"
+                                                    >
+                                                        <BiEdit className="text-base" />
+                                                    </Link>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {/* Empty state */}
+                        {products.length === 0 && (
+                            <div className="flex flex-col items-center justify-center py-20 gap-3">
+                                <span className="text-5xl">📦</span>
+                                <p className="font-semibold" style={{ color: "#E8EDF5" }}>No products yet</p>
+                                <p className="text-sm" style={{ color: "#7A8BA3" }}>Add your first product to get started.</p>
+                                <Link to="/admin/add-products" className="btn-primary mt-2 text-sm">
+                                    <FaPlus /> Add Product
+                                </Link>
+                            </div>
+                        )}
+                    </div>
+                </>
+            ) : (
+                <div className="flex items-center justify-center h-64">
+                    <LoadingAnimation />
+                </div>
+            )}
         </div>
-    )}
+    );
+}

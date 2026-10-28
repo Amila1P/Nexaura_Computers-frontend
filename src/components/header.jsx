@@ -1,7 +1,7 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BiCart, BiSearch } from "react-icons/bi";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import UserData from "./userData";
 
 const NAV_LINKS = [
@@ -12,7 +12,21 @@ const NAV_LINKS = [
 
 export default function Header({ user, setUser }) {
     const location = useLocation();
+    const navigate = useNavigate();
     const [menuOpen, setMenuOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [searchFocused, setSearchFocused] = useState(false);
+    const searchInputRef = useRef(null);
+
+    /** Navigate to /products with the search query as a URL param */
+    function handleSearch(e) {
+        e.preventDefault();
+        const q = searchQuery.trim();
+        navigate(q ? `/products?q=${encodeURIComponent(q)}` : "/products");
+        setSearchQuery("");
+        setSearchFocused(false);
+        searchInputRef.current?.blur();
+    }
 
     return (
         <header className="fixed top-0 left-0 z-50 w-full" style={{ background: "rgba(8,12,20,0.85)", backdropFilter: "blur(16px)", borderBottom: "1px solid rgba(30,45,69,0.8)" }}>
@@ -48,17 +62,61 @@ export default function Header({ user, setUser }) {
                 {/* ── Right Controls ── */}
                 <div className="flex items-center gap-3">
 
-                    {/* Search (desktop) */}
-                    <Link
-                        to="/products"
-                        className="hidden lg:flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all duration-200"
-                        style={{ background: "rgba(30,45,69,0.6)", color: "#7A8BA3", border: "1px solid rgba(30,45,69,0.9)" }}
-                        onMouseEnter={e => e.currentTarget.style.borderColor = "#4F8EF7"}
-                        onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(30,45,69,0.9)"}
+                    {/* ── Search widget (desktop) ── */}
+                    <form
+                        id="header-search-form"
+                        onSubmit={handleSearch}
+                        className="hidden lg:flex items-center rounded-lg transition-all duration-300 overflow-hidden"
+                        style={{
+                            background: "rgba(30,45,69,0.6)",
+                            border: `1px solid ${searchFocused ? "#4F8EF7" : "rgba(30,45,69,0.9)"}`,
+                            boxShadow: searchFocused ? "0 0 0 3px rgba(79,142,247,0.12)" : "none",
+                            width: searchFocused ? "240px" : "180px",
+                            transition: "width 0.3s ease, border-color 0.2s ease, box-shadow 0.2s ease",
+                        }}
                     >
-                        <BiSearch className="text-lg" />
-                        <span className="hidden xl:inline">Browse products…</span>
-                    </Link>
+                        {/* Search icon — also acts as submit button */}
+                        <button
+                            type="submit"
+                            id="header-search-submit"
+                            aria-label="Search products"
+                            className="flex items-center justify-center px-3 py-2 shrink-0 transition-colors duration-200"
+                            style={{ color: searchFocused ? "#4F8EF7" : "#7A8BA3", background: "transparent", border: "none", cursor: "pointer" }}
+                        >
+                            <BiSearch className="text-lg" />
+                        </button>
+
+                        <input
+                            ref={searchInputRef}
+                            id="header-search-input"
+                            type="text"
+                            value={searchQuery}
+                            onChange={e => setSearchQuery(e.target.value)}
+                            onFocus={() => setSearchFocused(true)}
+                            onBlur={() => setSearchFocused(false)}
+                            placeholder="Browse products…"
+                            aria-label="Browse products search"
+                            className="flex-1 bg-transparent outline-none border-none text-sm pr-3 py-2"
+                            style={{
+                                color: "#E8EDF5",
+                                fontFamily: "'Inter', sans-serif",
+                                caretColor: "#4F8EF7",
+                            }}
+                        />
+                        {/* Clear button — shown when there's text */}
+                        {searchQuery && (
+                            <button
+                                type="button"
+                                id="header-search-clear"
+                                aria-label="Clear search"
+                                onClick={() => { setSearchQuery(""); searchInputRef.current?.focus(); }}
+                                className="flex items-center justify-center pr-2 shrink-0"
+                                style={{ color: "#7A8BA3", background: "transparent", border: "none", cursor: "pointer" }}
+                            >
+                                <HiX className="text-sm" />
+                            </button>
+                        )}
+                    </form>
 
                     {/* Cart */}
                     <Link
@@ -105,6 +163,28 @@ export default function Header({ user, setUser }) {
                             {label}
                         </Link>
                     ))}
+
+                    {/* Mobile search bar */}
+                    <form
+                        id="mobile-search-form"
+                        onSubmit={handleSearch}
+                        className="flex items-center rounded-lg mt-1"
+                        style={{ background: "rgba(30,45,69,0.6)", border: "1px solid rgba(30,45,69,0.9)" }}
+                    >
+                        <button type="submit" aria-label="Search" className="px-3 py-2.5" style={{ color: "#7A8BA3", background: "transparent", border: "none", cursor: "pointer" }}>
+                            <BiSearch className="text-lg" />
+                        </button>
+                        <input
+                            id="mobile-search-input"
+                            type="text"
+                            value={searchQuery}
+                            onChange={e => setSearchQuery(e.target.value)}
+                            placeholder="Search products…"
+                            className="flex-1 bg-transparent outline-none border-none text-sm py-2.5 pr-3"
+                            style={{ color: "#E8EDF5", fontFamily: "'Inter', sans-serif", caretColor: "#4F8EF7" }}
+                        />
+                    </form>
+
                     <div className="mt-2 pt-2" style={{ borderTop: "1px solid rgba(30,45,69,0.6)" }}>
                         <UserData user={user} setUser={setUser} />
                     </div>
