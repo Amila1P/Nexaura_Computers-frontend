@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import api from "../utils/api.js";
 import { Link, useNavigate } from "react-router-dom";
 import { CiUser } from "react-icons/ci";
-import { HiOutlineShoppingBag, HiOutlineCog, HiOutlineLogout } from "react-icons/hi";
+import { HiOutlineShoppingBag, HiOutlineCog, HiOutlineLogout, HiOutlineViewGrid } from "react-icons/hi";
 
 export default function UserData({ user, setUser }) {
     const navigate = useNavigate();
@@ -101,6 +101,31 @@ export default function UserData({ user, setUser }) {
 
                         {/* Menu Items */}
                         <div className="py-1">
+                            {/* Admin Dashboard link — only rendered if is_admin === true / isAdmin === true */}
+                            {(user?.isAdmin === true || user?.is_admin === true) && (
+                                <Link
+                                    to="/admin"
+                                    onClick={() => setOpen(false)}
+                                    className="flex items-center gap-3 px-4 py-2.5 text-sm font-semibold transition-colors duration-150"
+                                    style={{
+                                        color: "#4F8EF7",
+                                        background: "rgba(79,142,247,0.08)",
+                                        borderBottom: "1px solid #1E2D45",
+                                    }}
+                                    onMouseEnter={e => {
+                                        e.currentTarget.style.color = "#E8EDF5";
+                                        e.currentTarget.style.background = "rgba(79,142,247,0.18)";
+                                    }}
+                                    onMouseLeave={e => {
+                                        e.currentTarget.style.color = "#4F8EF7";
+                                        e.currentTarget.style.background = "rgba(79,142,247,0.08)";
+                                    }}
+                                >
+                                    <HiOutlineViewGrid className="text-base" style={{ color: "#4F8EF7" }} />
+                                    <span>Admin Dashboard</span>
+                                </Link>
+                            )}
+
                             {[
                                 { icon: HiOutlineShoppingBag, label: "My Orders", to: "/my-orders" },
                                 { icon: HiOutlineCog, label: "Settings", to: "/settings" },

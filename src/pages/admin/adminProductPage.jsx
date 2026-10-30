@@ -4,8 +4,8 @@ import { BiEdit } from "react-icons/bi";
 import { HiCube } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import LoadingAnimation from "../../components/LoadingAnimation.jsx";
-import ProductDeleteModal from "../../components/ProductDeleteModal.jsx";
+import LoadingAnimation from "../../components/loadingAnimation.jsx";
+import ProductDeleteModal from "../../components/productDeleteModal.jsx";
 
 export default function AdminProductPage() {
 

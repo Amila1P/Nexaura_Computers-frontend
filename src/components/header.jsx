@@ -25,6 +25,7 @@ export default function Header({ user, setUser }) {
         navigate(q ? `/products?q=${encodeURIComponent(q)}` : "/products");
         setSearchQuery("");
         setSearchFocused(false);
+        setMenuOpen(false);
         searchInputRef.current?.blur();
     }
 

@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom"
 import Header from "./components/header.jsx"
 import HomePage from "./pages/homePage.jsx"
 import AdminPage from "./pages/adminPage.jsx"
+import AdminRoute from "./components/adminRoute.jsx"
 import LoginPage from "./pages/loginPage.jsx"
 import TestPage from "./pages/testPage.jsx"
 import { Toaster } from "react-hot-toast"
@@ -35,10 +36,14 @@ function App() {
         <Header user={user} setUser={setUser} />
 
         <Routes>
-          <Route path="/*"      element={<HomePage user={user} setUser={setUser} />} />
-          <Route path="/admin/*" element={<AdminPage />} />
-          <Route path="/test"   element={<TestPage />} />
-          <Route path="/login"  element={<LoginPage user={user} setUser={setUser} />} />
+          <Route path="/*"       element={<HomePage user={user} setUser={setUser} />} />
+          <Route path="/admin/*" element={
+            <AdminRoute user={user} setUser={setUser}>
+              <AdminPage />
+            </AdminRoute>
+          } />
+          <Route path="/test"    element={<TestPage />} />
+          <Route path="/login"   element={<LoginPage user={user} setUser={setUser} />} />
         </Routes>
       </div>
     </GoogleOAuthProvider>

@@ -12,11 +12,26 @@ export default function ProductPage() {
     const [search, setSearch] = useState(() => searchParams.get("q") || "");
     const [activeCategory, setActiveCategory] = useState("All");
 
-    // Keep the URL ?q= param in sync with the search box so URLs are shareable/bookmarkable
+    // Sync search input whenever the URL ?q= query param changes (e.g. searching from Header while already on /products)
     useEffect(() => {
-        const params = {};
-        if (search) params.q = search;
-        setSearchParams(params, { replace: true });
+        const urlQ = searchParams.get("q") || "";
+        if (urlQ !== search) {
+            setSearch(urlQ);
+        }
+    }, [searchParams]);
+
+    // Keep the URL ?q= param in sync when typing in the search box
+    useEffect(() => {
+        const currentQ = searchParams.get("q") || "";
+        if (search !== currentQ) {
+            const nextParams = new URLSearchParams(searchParams);
+            if (search.trim()) {
+                nextParams.set("q", search);
+            } else {
+                nextParams.delete("q");
+            }
+            setSearchParams(nextParams, { replace: true });
+        }
     }, [search]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
@@ -33,7 +48,12 @@ export default function ProductPage() {
 
     const filtered = products.filter(p => {
         const matchCat = activeCategory === "All" || p.category === activeCategory;
-        const matchSearch = !search || p.name?.toLowerCase().includes(search.toLowerCase()) || p.brand?.toLowerCase().includes(search.toLowerCase());
+        const q = search.trim().toLowerCase();
+        const matchSearch = !q ||
+            p.name?.toLowerCase().includes(q) ||
+            p.brand?.toLowerCase().includes(q) ||
+            p.category?.toLowerCase().includes(q) ||
+            p.model?.toLowerCase().includes(q);
         return matchCat && matchSearch;
     });
 
@@ -79,16 +99,29 @@ export default function ProductPage() {
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
                     {/* Search */}
                     <div className="relative flex-1 max-w-md">
-                        {/* Icon sits at left-3.5 (~14px); input padded pl-11 (~44px) = ~30px gap between icon right-edge and text */}
-                        <HiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-lg" style={{ color: "#7A8BA3" }} />
+                        {/* Magnification icon with generous visual clearance */}
+                        <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none flex items-center justify-center">
+                            <HiSearch className="text-xl" style={{ color: "#7A8BA3" }} />
+                        </div>
                         <input
                             type="text"
                             placeholder="Search products or brands…"
                             value={search}
                             onChange={e => setSearch(e.target.value)}
-                            className="form-input pl-11"
+                            className="form-input"
+                            style={{ paddingLeft: "3.25rem", paddingRight: search ? "2.5rem" : "1rem" }}
                             id="product-search"
                         />
+                        {search && (
+                            <button
+                                type="button"
+                                onClick={() => setSearch("")}
+                                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-sm text-[#7A8BA3] hover:text-[#E8EDF5] transition-colors"
+                                aria-label="Clear product search"
+                            >
+                                ✕
+                            </button>
+                        )}
                     </div>
 
                     {/* Category chips */}

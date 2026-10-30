@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { HiClipboardList, HiChevronLeft, HiChevronRight } from "react-icons/hi";
-import LoadingAnimation from "../../components/LoadingAnimation.jsx";
+import LoadingAnimation from "../../components/loadingAnimation.jsx";
 import OrderDetailsModal from "../../components/orderDetailsModal.jsx";
 import getFormattedPrice from "../../utils/priceFormat.js";
 

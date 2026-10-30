@@ -93,17 +93,17 @@ export default function AdminPage() {
     }
 
     return (
-        <div className="flex min-h-screen" style={{ background: "#080C14" }}>
+        <div className="flex min-h-screen pt-[70px]" style={{ background: "#080C14" }}>
 
             {/* ══════════════════════════════════════
                 SIDEBAR  
             ══════════════════════════════════════ */}
             <aside
-                className={`fixed top-0 left-0 z-50 flex flex-col transition-transform duration-300
+                className={`fixed top-[70px] left-0 z-40 flex flex-col transition-transform duration-300
                     ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}
                 style={{
                     width         : "260px",
-                    height        : "100vh",
+                    height        : "calc(100vh - 70px)",
                     background    : "#0F1623",
                     borderRight   : "1px solid #1E2D45",
                 }}
@@ -181,7 +181,7 @@ export default function AdminPage() {
             {/* ── Mobile overlay ── */}
             {sidebarOpen && (
                 <div
-                    className="lg:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+                    className="lg:hidden fixed inset-0 top-[70px] z-30 bg-black/60 backdrop-blur-sm"
                     onClick={() => setSidebarOpen(false)}
                 />
             )}
@@ -189,7 +189,7 @@ export default function AdminPage() {
             {/* ══════════════════════════════════════
                 MAIN CONTENT  
             ══════════════════════════════════════ */}
-            <div className="flex-1 lg:ml-[260px] flex flex-col min-h-screen">
+            <div className="flex-1 lg:ml-[260px] flex flex-col min-h-[calc(100vh-70px)]">
 
                 {/* ── Mobile top-bar ── */}
                 <div
