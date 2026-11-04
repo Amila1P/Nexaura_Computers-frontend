@@ -1,16 +1,82 @@
-# React + Vite
+# NexAura Computers — Frontend Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This directory contains the client-side single-page application (SPA) for **NexAura Computers**, an e-commerce platform for computer hardware, custom rigs, laptops, and peripherals.
 
-Currently, two official plugins are available:
+The frontend is built with **React 19**, **Vite 8**, **Tailwind CSS v4**, and **React Router DOM v7**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+> For the full repository overview, backend architecture, and complete documentation, refer to the [Root README](../README.md).
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack & Libraries
 
-## Expanding the ESLint configuration
+- **React 19** (`react`, `react-dom`)
+- **Vite 8** (Fast HMR & build tooling)
+- **Tailwind CSS v4** (`@tailwindcss/vite`, `tailwindcss`)
+- **React Router DOM v7** (Declarative client-side routing)
+- **React Hot Toast** (Toast notifications)
+- **React Icons** (Heroicons, FontAwesome 6, Feather, BoxIcons)
+- **@react-oauth/google** (Google OAuth2 sign-in)
+- **@supabase/supabase-js** (Direct cloud image upload to Supabase Storage)
+- **Axios** (API communication with the Express backend)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Available Scripts
+
+In this directory, you can run:
+
+```bash
+# Start development server with Hot Module Replacement (HMR)
+npm run dev
+
+# Build production-ready assets into the dist folder
+npm run build
+
+# Preview the built production assets locally
+npm run preview
+
+# Run ESLint to check for code style and syntax issues
+npm run lint
+```
+
+---
+
+## Environment Setup
+
+Create a `.env` file in this directory:
+
+```env
+VITE_API_URL=http://localhost:3000/api
+```
+
+- **Google OAuth Client ID** is configured in `src/App.jsx`.
+- **Supabase Storage credentials** are configured in `src/utils/mediaUpload.js`.
+
+---
+
+## Storefront Routes Overview
+
+### Customer Storefront
+- `/` — Landing page with hero banner carousel, category highlights, trust badges, and featured products
+- `/products` — Product catalog with category filter tabs and URL-synchronized search (`?q=...`)
+- `/overview/:productId` — Single product details view with multi-image slideshow, specifications, and cart actions
+- `/cart` — Persistent shopping cart with item quantity modifiers and total calculation
+- `/checkout` — Checkout review with shipping address modal and order submission
+- `/my-orders` — Customer order history table with full order details modal
+- `/settings` — Customer profile update (first name, last name, avatar upload via Supabase) and password change
+- `/contact-us` — Contact information, inquiry form, and interactive FAQ
+- `/login` — User authentication (standard email/password and Google OAuth2)
+- `/register` — Account registration with client-side validation
+
+### Admin Suite (`/admin/*`)
+Protected by the `AdminRoute` component (client JWT check + server-side verification):
+- `/admin` or `/admin/dashboard` — Live business metrics, 7-day sales velocity chart, order status distribution, and recent orders
+- `/admin/products` — Complete inventory table with stock indicators and action buttons
+- `/admin/add-products` — Product creation form with multi-image Supabase upload
+- `/admin/edit-products` — Product update form pre-populated with selected item data
+- `/admin/orders` — Store-wide order fulfillment management with order details modal, status updates, and administrative notes
+- `/admin/categories` — Category and brand manager with product count tracking
+- `/admin/coupons` — Discount coupon management (percentage & fixed discounts)
+- `/admin/banners` — Marketing hero and promo banner configurations
+- `/admin/settings` — Store profile, shipping rates, and payment gateway sandbox settings
