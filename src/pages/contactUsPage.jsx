@@ -2,6 +2,7 @@ import { useState } from "react";
 import { HiMail, HiPhone, HiLocationMarker, HiCheckCircle } from "react-icons/hi";
 import { BiSend } from "react-icons/bi";
 import toast from "react-hot-toast";
+import Footer from "../components/footer.jsx";
 
 const CONTACT_INFO = [
     {
@@ -240,12 +241,8 @@ export default function ContactUsPage() {
 
             </div>
 
-            {/* ── Footer Strip ── */}
-            <footer style={{ background: "#0F1623", borderTop: "1px solid #1E2D45" }}>
-                <div className="max-w-7xl mx-auto px-6 py-8 text-center">
-                    <p className="text-sm" style={{ color: "#7A8BA3" }}>© 2025 NexAura Computers. All rights reserved.</p>
-                </div>
-            </footer>
+            {/* ── Footer ── */}
+            <Footer />
         </div>
     );
 }

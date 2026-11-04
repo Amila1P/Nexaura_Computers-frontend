@@ -4,6 +4,7 @@ import { BiSupport } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import api from "../utils/api";
 import { getFormattedPrice } from "../utils/priceFormat";
+import Footer from "../components/footer.jsx";
 
 /* ── Category data ── */
 const CATEGORIES = [
@@ -315,21 +316,9 @@ export default function LandingPage() {
             </section>
 
             {/* ─────────────────────────────────────────
-                FOOTER STRIP
+                FOOTER
             ───────────────────────────────────────── */}
-            <footer style={{ background: "#0F1623", borderTop: "1px solid #1E2D45" }}>
-                <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <p className="text-sm" style={{ color: "#7A8BA3" }}>© 2025 NexAura Computers. All rights reserved.</p>
-                    <div className="flex gap-6">
-                        {["Privacy Policy", "Terms of Service", "Sitemap"].map(l => (
-                            <Link key={l} to="/" className="text-xs transition-colors" style={{ color: "#7A8BA3" }}
-                                onMouseEnter={e => e.currentTarget.style.color = "#4F8EF7"}
-                                onMouseLeave={e => e.currentTarget.style.color = "#7A8BA3"}
-                            >{l}</Link>
-                        ))}
-                    </div>
-                </div>
-            </footer>
+            <Footer />
         </div>
     );
 }

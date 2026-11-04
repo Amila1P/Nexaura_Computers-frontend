@@ -11,23 +11,29 @@ import NotFoundPage from "./notFoundPage.jsx"
 import RegisterPage from "./registerPage.jsx"
 import LandingPage from "./landingPage.jsx"
 import ContactUsPage from "./contactUsPage.jsx"
+import PrivacyPolicyPage from "./privacyPolicyPage.jsx"
+import TermsOfServicePage from "./termsOfServicePage.jsx"
+import SitemapPage from "./sitemapPage.jsx"
 
 export default function HomePage({ user, setUser }) {
     return (
         <div className="w-full min-h-screen" style={{ background: "#080C14" }}>
             <div className="w-full min-h-[calc(100vh-70px)] pt-[70px]">
                 <Routes>
-                    <Route path="/"            element={<LandingPage />} />
-                    <Route path="/products"    element={<ProductPage />} />
-                    <Route path="/contact-us"  element={<ContactUsPage />} />
+                    <Route path="/"                 element={<LandingPage />} />
+                    <Route path="/products"         element={<ProductPage />} />
+                    <Route path="/contact-us"       element={<ContactUsPage />} />
                     <Route path="/overview/:productId" element={<ProductOverviewPage />} />
-                    <Route path="/cart"        element={<CartPage />} />
-                    <Route path="/my-orders"   element={<CustomerOrdePage />} />
-                    <Route path="/settings"    element={<SetingsPage />} />
-                    <Route path="/checkout"    element={<CheckoutPage />} />
-                    <Route path="/register"    element={<RegisterPage setUser={setUser} />} />
-                    <Route path="/test"        element={<TestPage />} />
-                    <Route path="/*"           element={<NotFoundPage />} />
+                    <Route path="/cart"             element={<CartPage />} />
+                    <Route path="/my-orders"        element={<CustomerOrdePage />} />
+                    <Route path="/settings"         element={<SetingsPage />} />
+                    <Route path="/checkout"         element={<CheckoutPage />} />
+                    <Route path="/register"         element={<RegisterPage setUser={setUser} />} />
+                    <Route path="/privacy-policy"   element={<PrivacyPolicyPage />} />
+                    <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+                    <Route path="/sitemap"          element={<SitemapPage />} />
+                    <Route path="/test"             element={<TestPage />} />
+                    <Route path="/*"                element={<NotFoundPage />} />
                 </Routes>
                 <BottomNavigationBar user={user} setUser={setUser} />
             </div>

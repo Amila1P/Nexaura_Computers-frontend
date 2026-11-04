@@ -34,8 +34,57 @@ export default function Header({ user, setUser }) {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 h-[70px] flex items-center justify-between gap-4">
 
                 {/* ── Logo ── */}
-                <Link to="/" className="flex items-center gap-2 shrink-0">
-                    <img src="/NexAura Logo.png" alt="NexAura Computers" className="h-10 w-auto" />
+                <Link
+                    to="/"
+                    className="flex items-center gap-2.5 shrink-0 px-2.5 py-1.5 rounded-xl transition-all duration-300 group"
+                    style={{
+                        background: "linear-gradient(135deg, rgba(21, 29, 46, 0.65) 0%, rgba(15, 22, 35, 0.85) 100%)",
+                        border: "1px solid rgba(79, 142, 247, 0.25)",
+                        boxShadow: "0 2px 12px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05)",
+                        textDecoration: "none",
+                    }}
+                    onMouseEnter={e => {
+                        e.currentTarget.style.borderColor = "rgba(79, 142, 247, 0.55)";
+                        e.currentTarget.style.boxShadow = "0 0 20px rgba(79, 142, 247, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)";
+                        e.currentTarget.style.transform = "translateY(-1px)";
+                    }}
+                    onMouseLeave={e => {
+                        e.currentTarget.style.borderColor = "rgba(79, 142, 247, 0.25)";
+                        e.currentTarget.style.boxShadow = "0 2px 12px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05)";
+                        e.currentTarget.style.transform = "translateY(0)";
+                    }}
+                    aria-label="NexAura Computers Home"
+                >
+                    <div
+                        className="relative flex items-center justify-center p-1 rounded-lg shrink-0"
+                        style={{
+                            background: "radial-gradient(circle at center, rgba(79, 142, 247, 0.18) 0%, rgba(21, 29, 46, 0.4) 100%)",
+                            border: "1px solid rgba(79, 142, 247, 0.15)",
+                        }}
+                    >
+                        <img
+                            src="/NexAura Logo.png"
+                            alt="NexAura Computers Logo"
+                            className="h-8 sm:h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                            style={{
+                                filter: "drop-shadow(0 0 10px rgba(79, 142, 247, 0.5)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7)) brightness(1.15) contrast(1.1)",
+                            }}
+                        />
+                    </div>
+                    <div className="flex flex-col leading-none pr-1">
+                        <span
+                            className="text-base sm:text-lg font-black tracking-tight"
+                            style={{ color: "#E8EDF5", fontFamily: "'Outfit', sans-serif" }}
+                        >
+                            NexAura
+                        </span>
+                        <span
+                            className="text-[9px] sm:text-[10px] font-bold tracking-[0.16em] uppercase"
+                            style={{ color: "#4F8EF7" }}
+                        >
+                            Computers
+                        </span>
+                    </div>
                 </Link>
 
                 {/* ── Desktop Nav ── */}

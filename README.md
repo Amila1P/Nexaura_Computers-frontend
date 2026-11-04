@@ -15,7 +15,7 @@ The frontend is built with **React 19**, **Vite 8**, **Tailwind CSS v4**, and **
 - **Tailwind CSS v4** (`@tailwindcss/vite`, `tailwindcss`)
 - **React Router DOM v7** (Declarative client-side routing)
 - **React Hot Toast** (Toast notifications)
-- **React Icons** (Heroicons, FontAwesome 6, Feather, BoxIcons)
+- **React Icons** (Heroicons, FontAwesome 6, Feather, BoxIcons, Tabler)
 - **@react-oauth/google** (Google OAuth2 sign-in)
 - **@supabase/supabase-js** (Direct cloud image upload to Supabase Storage)
 - **Axios** (API communication with the Express backend)
@@ -60,12 +60,20 @@ VITE_API_URL=http://localhost:3000/api
 ### Customer Storefront
 - `/` — Landing page with hero banner carousel, category highlights, trust badges, and featured products
 - `/products` — Product catalog with category filter tabs and URL-synchronized search (`?q=...`)
-- `/overview/:productId` — Single product details view with multi-image slideshow, specifications, and cart actions
+- `/overview/:productId` — Single product details view with:
+  - Top breadcrumb & quick catalog counter (`Product X of Y`)
+  - Adjacent hardware browse cards (Previous & Next product switchers)
+  - Interactive multi-image slideshow with zoom-on-hover & auto-reset
+  - Related Products horizontal carousel slider matching hardware category
+  - Quantity controls, Add to Cart, and Buy Now checkout actions
 - `/cart` — Persistent shopping cart with item quantity modifiers and total calculation
 - `/checkout` — Checkout review with shipping address modal and order submission
 - `/my-orders` — Customer order history table with full order details modal
 - `/settings` — Customer profile update (first name, last name, avatar upload via Supabase) and password change
 - `/contact-us` — Contact information, inquiry form, and interactive FAQ
+- `/privacy-policy` — Comprehensive e-commerce data privacy and security policy
+- `/terms-of-service` — Store terms, warranties, delivery timelines, and dispute terms
+- `/sitemap` — Searchable structured directory of all store sections and catalog categories
 - `/login` — User authentication (standard email/password and Google OAuth2)
 - `/register` — Account registration with client-side validation
 
