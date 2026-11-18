@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
     HiShieldCheck,
@@ -11,13 +12,18 @@ import {
 import Footer from "../components/footer.jsx";
 
 export default function PrivacyPolicyPage() {
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
     return (
         <div className="w-full min-h-screen flex flex-col justify-between" style={{ background: "#080C14" }}>
             <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 flex-1">
-                
+
                 {/* ── HEADER ── */}
                 <div className="text-center mb-12">
-                    <div 
+                    <div
                         className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold mb-4"
                         style={{
                             background: "rgba(79,142,247,0.12)",
@@ -27,7 +33,7 @@ export default function PrivacyPolicyPage() {
                     >
                         <HiShieldCheck className="text-base" /> Legal & Transparency
                     </div>
-                    <h1 
+                    <h1
                         className="text-3xl sm:text-4xl lg:text-5xl font-black mb-3"
                         style={{ color: "#E8EDF5", fontFamily: "'Outfit', sans-serif" }}
                     >
@@ -43,9 +49,9 @@ export default function PrivacyPolicyPage() {
 
                 {/* ── POLICY CONTENT SECTIONS ── */}
                 <div className="space-y-8">
-                    
+
                     {/* 1. Introduction */}
-                    <section 
+                    <section
                         className="p-6 sm:p-8 rounded-3xl"
                         style={{ background: "#0F1623", border: "1px solid #1E2D45" }}
                     >
@@ -67,7 +73,7 @@ export default function PrivacyPolicyPage() {
                     </section>
 
                     {/* 2. Information We Collect */}
-                    <section 
+                    <section
                         className="p-6 sm:p-8 rounded-3xl"
                         style={{ background: "#0F1623", border: "1px solid #1E2D45" }}
                     >
@@ -109,7 +115,7 @@ export default function PrivacyPolicyPage() {
                     </section>
 
                     {/* 3. How We Use Your Data */}
-                    <section 
+                    <section
                         className="p-6 sm:p-8 rounded-3xl"
                         style={{ background: "#0F1623", border: "1px solid #1E2D45" }}
                     >
@@ -132,7 +138,7 @@ export default function PrivacyPolicyPage() {
                     </section>
 
                     {/* 4. Storage & Security */}
-                    <section 
+                    <section
                         className="p-6 sm:p-8 rounded-3xl"
                         style={{ background: "#0F1623", border: "1px solid #1E2D45" }}
                     >
@@ -157,7 +163,7 @@ export default function PrivacyPolicyPage() {
                     </section>
 
                     {/* 5. Browser LocalStorage & Cookies */}
-                    <section 
+                    <section
                         className="p-6 sm:p-8 rounded-3xl"
                         style={{ background: "#0F1623", border: "1px solid #1E2D45" }}
                     >
@@ -177,7 +183,7 @@ export default function PrivacyPolicyPage() {
                     </section>
 
                     {/* 6. User Rights & Contact */}
-                    <section 
+                    <section
                         className="p-6 sm:p-8 rounded-3xl"
                         style={{ background: "#0F1623", border: "1px solid #1E2D45" }}
                     >
@@ -193,7 +199,7 @@ export default function PrivacyPolicyPage() {
                         <p className="text-sm leading-relaxed mb-4" style={{ color: "#A0AEC0" }}>
                             You maintain the right to view, modify, or update your personal account information directly via your <Link to="/settings" className="text-[#4F8EF7] underline">Account Settings</Link> page.
                         </p>
-                        <div 
+                        <div
                             className="p-4 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                             style={{ background: "#151D2E", border: "1px solid #1E2D45" }}
                         >

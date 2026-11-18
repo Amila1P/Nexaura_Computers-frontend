@@ -20,6 +20,7 @@ export default function SitemapPage() {
 
     // Fetch live product categories to make the sitemap dynamic
     useEffect(() => {
+        window.scrollTo(0, 0)
         api.get("/products")
             .then((res) => {
                 if (Array.isArray(res.data)) {
@@ -29,7 +30,7 @@ export default function SitemapPage() {
                     setLiveCategories(uniqueCats);
                 }
             })
-            .catch(() => {});
+            .catch(() => { });
     }, []);
 
     // Standard fallback categories if catalog is still loading
@@ -126,10 +127,10 @@ export default function SitemapPage() {
     return (
         <div className="w-full min-h-screen flex flex-col justify-between" style={{ background: "#080C14" }}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 flex-1 w-full">
-                
+
                 {/* ── HEADER ── */}
                 <div className="text-center mb-10">
-                    <div 
+                    <div
                         className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold mb-4"
                         style={{
                             background: "rgba(79,142,247,0.12)",
@@ -139,7 +140,7 @@ export default function SitemapPage() {
                     >
                         <HiMap className="text-base" /> Complete Architecture Directory
                     </div>
-                    <h1 
+                    <h1
                         className="text-3xl sm:text-4xl lg:text-5xl font-black mb-3"
                         style={{ color: "#E8EDF5", fontFamily: "'Outfit', sans-serif" }}
                     >

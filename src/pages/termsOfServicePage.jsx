@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
     HiScale,
@@ -11,13 +12,18 @@ import {
 import Footer from "../components/footer.jsx";
 
 export default function TermsOfServicePage() {
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
     return (
         <div className="w-full min-h-screen flex flex-col justify-between" style={{ background: "#080C14" }}>
             <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 flex-1">
-                
+
                 {/* ── HEADER ── */}
                 <div className="text-center mb-12">
-                    <div 
+                    <div
                         className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold mb-4"
                         style={{
                             background: "rgba(157,111,255,0.12)",
@@ -27,7 +33,7 @@ export default function TermsOfServicePage() {
                     >
                         <HiScale className="text-base" /> Legal Agreements & User Terms
                     </div>
-                    <h1 
+                    <h1
                         className="text-3xl sm:text-4xl lg:text-5xl font-black mb-3"
                         style={{ color: "#E8EDF5", fontFamily: "'Outfit', sans-serif" }}
                     >
@@ -43,9 +49,9 @@ export default function TermsOfServicePage() {
 
                 {/* ── TERMS CONTENT SECTIONS ── */}
                 <div className="space-y-8">
-                    
+
                     {/* 1. Acceptance */}
-                    <section 
+                    <section
                         className="p-6 sm:p-8 rounded-3xl"
                         style={{ background: "#0F1623", border: "1px solid #1E2D45" }}
                     >
@@ -67,7 +73,7 @@ export default function TermsOfServicePage() {
                     </section>
 
                     {/* 2. Products, Pricing & Accuracy */}
-                    <section 
+                    <section
                         className="p-6 sm:p-8 rounded-3xl"
                         style={{ background: "#0F1623", border: "1px solid #1E2D45" }}
                     >
@@ -94,7 +100,7 @@ export default function TermsOfServicePage() {
                     </section>
 
                     {/* 3. Orders & Payment */}
-                    <section 
+                    <section
                         className="p-6 sm:p-8 rounded-3xl"
                         style={{ background: "#0F1623", border: "1px solid #1E2D45" }}
                     >
@@ -116,7 +122,7 @@ export default function TermsOfServicePage() {
                     </section>
 
                     {/* 4. Shipping & Delivery */}
-                    <section 
+                    <section
                         className="p-6 sm:p-8 rounded-3xl"
                         style={{ background: "#0F1623", border: "1px solid #1E2D45" }}
                     >
@@ -145,7 +151,7 @@ export default function TermsOfServicePage() {
                     </section>
 
                     {/* 5. Warranties & Returns */}
-                    <section 
+                    <section
                         className="p-6 sm:p-8 rounded-3xl"
                         style={{ background: "#0F1623", border: "1px solid #1E2D45" }}
                     >
@@ -172,7 +178,7 @@ export default function TermsOfServicePage() {
                     </section>
 
                     {/* 6. Governing Law */}
-                    <section 
+                    <section
                         className="p-6 sm:p-8 rounded-3xl"
                         style={{ background: "#0F1623", border: "1px solid #1E2D45" }}
                     >
@@ -188,7 +194,7 @@ export default function TermsOfServicePage() {
                         <p className="text-sm leading-relaxed mb-4" style={{ color: "#A0AEC0" }}>
                             These Terms of Service and any related transaction disputes shall be governed by and construed in accordance with the substantive laws of the Democratic Socialist Republic of Sri Lanka, under the exclusive jurisdiction of the competent courts in Colombo.
                         </p>
-                        <div 
+                        <div
                             className="p-4 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                             style={{ background: "#151D2E", border: "1px solid #1E2D45" }}
                         >
