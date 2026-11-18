@@ -36,6 +36,7 @@ export default function AdminEditProductPage() {
     const [category,      setCategory]      = useState(() => selectedProduct?.category      ?? "");
     const [isAvailable,   setIsAvailable]   = useState(() => selectedProduct?.isAvailable   ?? true);
     const [stock,         setStock]         = useState(() => selectedProduct?.stock         ?? 0);
+    const [isFeatured,    setIsFeatured]    = useState(() => selectedProduct?.isFeatured    ?? false);
     const [isUpdating,    setIsUpdating]    = useState(false);
     const navigate = useNavigate();
 
@@ -67,6 +68,7 @@ export default function AdminEditProductPage() {
                 labelledPrice: Number(labelledPrice),
                 description, images: urls, brand, model, category,
                 isAvailable, stock: Number(stock) || 0,
+                isFeatured,
             };
             if (urls.length === 0) {
                 productData.images = selectedProduct?.images ?? [];
@@ -225,6 +227,18 @@ export default function AdminEditProductPage() {
                         >
                             <option value="true">Available</option>
                             <option value="false">Not Available</option>
+                        </select>
+                    </Field>
+                    <Field label="Hero Slideshow" quarter>
+                        <select
+                            value={isFeatured ? "true" : "false"}
+                            onChange={e => setIsFeatured(e.target.value === "true")}
+                            style={{ ...inputStyle, cursor: "pointer" }}
+                            onFocus={e => e.target.style.borderColor = "#4F8EF7"}
+                            onBlur={e => e.target.style.borderColor = "#1E2D45"}
+                        >
+                            <option value="false">Standard</option>
+                            <option value="true">Featured (Hero)</option>
                         </select>
                     </Field>
                 </div>

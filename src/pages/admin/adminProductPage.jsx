@@ -4,6 +4,7 @@ import { BiEdit } from "react-icons/bi";
 import { HiCube } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 import LoadingAnimation from "../../components/loadingAnimation.jsx";
 import ProductDeleteModal from "../../components/productDeleteModal.jsx";
 
@@ -26,6 +27,50 @@ export default function AdminProductPage() {
             });
         }
     }, [isProductAreLoaded]);
+
+    const handleToggleFeatured = async (product) => {
+        const isCurrentlyFeatured = Boolean(product.isFeatured);
+
+        // Strict limit: Maximum 5 featured products
+        if (!isCurrentlyFeatured) {
+            const currentFeaturedCount = products.filter(p => Boolean(p.isFeatured)).length;
+            if (currentFeaturedCount >= 5) {
+                toast.error("You can only feature up to 5 products in the slideshow.");
+                return;
+            }
+        }
+
+        const token = localStorage.getItem("token");
+        const newFeaturedState = !isCurrentlyFeatured;
+
+        // Optimistic UI state update
+        setProducts(prevProducts =>
+            prevProducts.map(p =>
+                p.productId === product.productId ? { ...p, isFeatured: newFeaturedState } : p
+            )
+        );
+
+        try {
+            await axios.put(
+                `${import.meta.env.VITE_API_URL}/products/${product.productId}`,
+                { isFeatured: newFeaturedState },
+                { headers: { Authorization: "Bearer " + token } }
+            );
+            toast.success(
+                newFeaturedState
+                    ? `"${product.name}" added to slideshow (Max 5)`
+                    : `"${product.name}" removed from slideshow`
+            );
+        } catch (error) {
+            // Revert state if the request fails
+            setProducts(prevProducts =>
+                prevProducts.map(p =>
+                    p.productId === product.productId ? { ...p, isFeatured: isCurrentlyFeatured } : p
+                )
+            );
+            toast.error(error?.response?.data?.message || "Failed to update featured status");
+        }
+    };
     /* ══ end LOGIC ══ */
 
     return (
@@ -64,11 +109,11 @@ export default function AdminProductPage() {
                             <table className="w-full">
                                 <thead>
                                     <tr style={{ background: "#151D2E", borderBottom: "1px solid #1E2D45" }}>
-                                        {["", "ID", "Name", "Category", "Brand", "Price", "Stock", "Status", "Actions"].map(h => (
+                                        {["", "ID", "Name", "Category", "Brand", "Price", "Stock", "Status", "Featured", "Actions"].map(h => (
                                             <th key={h}
                                                 className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider whitespace-nowrap"
                                                 style={{ color: "#7A8BA3" }}>
-                                                {h}
+                                                {h === "Featured" ? `Featured (${products.filter(p => p.isFeatured).length}/5)` : h}
                                             </th>
                                         ))}
                                     </tr>
@@ -161,6 +206,31 @@ export default function AdminProductPage() {
                                                         Out of Stock
                                                     </span>
                                                 )}
+                                            </td>
+
+                                            {/* Featured in Hero Slideshow */}
+                                            <td className="px-4 py-3">
+                                                <div className="flex items-center gap-2">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleToggleFeatured(item)}
+                                                        className="relative inline-flex items-center h-6 rounded-full w-11 transition-colors duration-200 focus:outline-none cursor-pointer"
+                                                        style={{
+                                                            background: item.isFeatured ? "#4F8EF7" : "#1E2D45",
+                                                            border: item.isFeatured ? "1px solid #4F8EF7" : "1px solid #2A3B55"
+                                                        }}
+                                                        title={item.isFeatured ? "Featured in Slideshow (Click to remove)" : "Click to feature in Slideshow (Max 5)"}
+                                                    >
+                                                        <span
+                                                            className={`inline-block w-4 h-4 transform transition-transform duration-200 bg-white rounded-full shadow-md ${
+                                                                item.isFeatured ? "translate-x-6" : "translate-x-1"
+                                                            }`}
+                                                        />
+                                                    </button>
+                                                    <span className="text-xs font-medium" style={{ color: item.isFeatured ? "#4F8EF7" : "#7A8BA3" }}>
+                                                        {item.isFeatured ? "Featured" : "No"}
+                                                    </span>
+                                                </div>
                                             </td>
 
                                             {/* Actions */}

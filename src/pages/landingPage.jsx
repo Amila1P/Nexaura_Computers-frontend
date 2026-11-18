@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import api from "../utils/api";
 import { getFormattedPrice } from "../utils/priceFormat";
 import Footer from "../components/footer.jsx";
+import HeroProductSlideshow from "../components/heroProductSlideshow.jsx";
 
 /* ── Category data ── */
 const CATEGORIES = [
@@ -131,23 +132,7 @@ export default function LandingPage() {
 
                     {/* Hero visual column */}
                     <div className="flex-1 flex justify-center items-center">
-                        <div className="relative">
-                            {/* Glowing ring */}
-                            <div
-                                className="absolute inset-0 rounded-3xl"
-                                style={{ background: "linear-gradient(135deg,rgba(79,142,247,0.2),rgba(157,111,255,0.1))", filter: "blur(40px)", transform: "scale(1.15)" }}
-                            />
-                            <div
-                                className="relative rounded-3xl overflow-hidden flex items-center justify-center"
-                                style={{ width: "360px", height: "360px", background: "rgba(21,29,46,0.7)", border: "1px solid rgba(79,142,247,0.2)" }}
-                            >
-                                <div className="text-center select-none">
-                                    <div className="text-9xl mb-4">🖥️</div>
-                                    <p className="text-sm font-semibold" style={{ color: "#4F8EF7" }}>NexAura Computers</p>
-                                    <p className="text-xs mt-1" style={{ color: "#7A8BA3" }}>Premium Tech. Unbeatable Prices.</p>
-                                </div>
-                            </div>
-                        </div>
+                        <HeroProductSlideshow />
                     </div>
                 </div>
 
